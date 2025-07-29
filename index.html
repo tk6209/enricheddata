@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Interativo: Dados Enriquecidos no E-commerce</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Calm Harmony Neutrals -->
+    <!-- Application Structure Plan: A tabbed, dashboard-style Single Page Application. This structure was chosen to break down the complex report into digestible, thematic sections (Overview, per-Network analysis, Data Convergence, Recommendations). It allows users to non-linearly explore and compare information, which is more effective for synthesis than a linear document. The core is the interactive data comparison, enabling users to quickly identify key data requirements. -->
+    <!-- Visualization & Content Choices: 
+        - Overview: Goal: Inform/Engage. Method: KPI cards and a conceptual diagram (HTML/CSS) to quickly convey the core problem/solution. Interaction: Hover effects. Justification: Engages users immediately with key stats.
+        - Network Tabs: Goal: Inform/Compare. Method: Accordion-style cards (HTML/JS) for each program. Interaction: Click to expand/collapse. Justification: Presents dense information cleanly, allowing progressive disclosure.
+        - Data Convergence: Goal: Organize/Compare/Relate. Method: An interactive HTML table linked to a Chart.js bar chart. Interaction: Clicking chart bars highlights table rows. Justification: Transforms a static table into an exploratory tool, visually summarizing data point commonality. Library: Chart.js for its simplicity and canvas rendering.
+        - Recommendations: Goal: Guide Action. Method: A clear, styled list (HTML/CSS). Justification: Provides actionable takeaways without distraction.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F8F7F4;
+            color: #4A4A4A;
+        }
+        .tab-button.active {
+            border-bottom-color: #6C8EAD;
+            color: #6C8EAD;
+            font-weight: 600;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .kpi-card {
+            background-color: #FFFFFF;
+            border: 1px solid #EAEAEA;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .kpi-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out;
+        }
+        .accordion-button.open + .accordion-content {
+            max-height: 1000px;
+        }
+        .table-row-highlight {
+            background-color: #E0E8EF !important;
+            transition: background-color 0.3s;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 400px;
+            max-height: 50vh;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 450px;
+            }
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <div class="container mx-auto p-4 md:p-8">
+        <header class="text-center mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-[#4A4A4A] mb-2">Dados Enriquecidos no E-commerce</h1>
+            <p class="text-lg text-gray-600">Uma Análise Interativa sobre Performance e Segurança</p>
+        </header>
+
+        <main>
+            <div class="w-full bg-white rounded-xl shadow-md p-4 md:p-6">
+                <div class="border-b border-gray-200 mb-6">
+                    <nav class="-mb-px flex flex-wrap justify-center space-x-2 md:space-x-8" aria-label="Tabs">
+                        <button class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm md:text-base border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 active" data-tab="overview">
+                            Visão Geral
+                        </button>
+                        <button class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm md:text-base border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="mastercard">
+                            Mastercard
+                        </button>
+                        <button class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm md:text-base border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="visa">
+                            Visa
+                        </button>
+                        <button class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm md:text-base border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="amex">
+                            Amex
+                        </button>
+                        <button class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm md:text-base border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="convergence">
+                            Convergência de Dados
+                        </button>
+                        <button class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm md:text-base border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="recommendations">
+                            Recomendações
+                        </button>
+                    </nav>
+                </div>
+
+                <div id="tab-content-container">
+                    <!-- Visão Geral -->
+                    <div id="overview" class="tab-content active">
+                        <div class="p-2 md:p-4">
+                            <h2 class="text-2xl font-bold mb-4 text-center">O Imperativo dos Dados Enriquecidos</h2>
+                            <p class="text-center text-gray-600 max-w-3xl mx-auto mb-8">No e-commerce moderno, o sucesso depende de um delicado equilíbrio: maximizar as aprovações de transações legítimas e, ao mesmo tempo, minimizar as perdas por fraude. Os dados enriquecidos são o ponto de apoio que permite alcançar ambos os objetivos, transformando informações brutas em inteligência para decisões mais seguras e precisas.</p>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                                <div class="kpi-card rounded-lg p-6 text-center">
+                                    <h3 class="text-4xl font-bold text-[#6C8EAD]">>75%</h3>
+                                    <p class="mt-2 font-semibold">das reclamações de fraude</p>
+                                    <p class="text-sm text-gray-500">são "fraude amigável" em alguns mercados, um alvo direto dos novos programas.</p>
+                                </div>
+                                <div class="kpi-card rounded-lg p-6 text-center">
+                                    <h3 class="text-4xl font-bold text-[#6C8EAD]">>85%</h3>
+                                    <p class="mt-2 font-semibold">Redução de Falsos Positivos</p>
+                                    <p class="text-sm text-gray-500">com IA da Mastercard, aumentando aprovações e satisfação do cliente.</p>
+                                </div>
+                                <div class="kpi-card rounded-lg p-6 text-center">
+                                    <h3 class="text-4xl font-bold text-[#6C8EAD]">100+</h3>
+                                    <p class="mt-2 font-semibold">Pontos de Dados</p>
+                                    <p class="text-sm text-gray-500">são trocados via EMV 3-D Secure, o padrão unificador do setor.</p>
+                                </div>
+                            </div>
+
+                            <div class="bg-gray-50 rounded-lg p-6">
+                                <h3 class="text-xl font-bold text-center mb-4">O Duplo Impacto: Segurança e Crescimento</h3>
+                                <p class="text-center text-gray-600 max-w-3xl mx-auto">A visão tradicional de que segurança e conversão são opostos está ultrapassada. Uma avaliação de risco mais precisa, alimentada por dados ricos, permite que transações legítimas fluam sem atrito (reduzindo falsos positivos), impulsionando a receita, ao mesmo tempo que bloqueia fraudes reais. Investir em dados enriquecidos é um investimento estratégico no crescimento do negócio.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mastercard -->
+                    <div id="mastercard" class="tab-content">
+                        <div class="p-2 md:p-4">
+                            <h2 class="text-2xl font-bold mb-4 text-center">Ecossistema de Confiança da Mastercard</h2>
+                             <p class="text-center text-gray-600 max-w-3xl mx-auto mb-8">A Mastercard desenvolveu um conjunto de soluções multicamadas que aproveitam dados enriquecidos e IA para combater a fraude de forma proativa, otimizar autorizações e criar um ecossistema de pagamentos mais seguro e responsável. Clique em cada programa para ver os detalhes.</p>
+                            <div class="space-y-4">
+                                <!-- Accordion Item 1 -->
+                                <div class="bg-gray-50 rounded-lg border border-gray-200">
+                                    <button class="accordion-button w-full flex justify-between items-center p-4 text-left font-semibold">
+                                        First Party Fraud Protection
+                                        <span class="transform transition-transform duration-300">&#9662;</span>
+                                    </button>
+                                    <div class="accordion-content px-4 pb-4 text-gray-600">
+                                        <p><strong>Objetivo:</strong> Combater a "fraude amigável" (disputas de transações legítimas) e transferir a responsabilidade para o comerciante quando provas são fornecidas.</p>
+                                        <p class="mt-2"><strong>Como funciona:</strong> Utiliza IA para analisar dados históricos e determinar se o portador do cartão autorizou a transação. Exige provas de 3 categorias: Identidade do Dispositivo, Fator de Entrega e Fator de Identidade Adicional.</p>
+                                        <p class="mt-2"><strong>Benefício para o comerciante:</strong> Transferência de responsabilidade (liability shift) em disputas, reduzindo perdas com chargebacks.</p>
+                                    </div>
+                                </div>
+                                <!-- Accordion Item 2 -->
+                                <div class="bg-gray-50 rounded-lg border border-gray-200">
+                                    <button class="accordion-button w-full flex justify-between items-center p-4 text-left font-semibold">
+                                        Identity Check Insights (EMV 3DS2)
+                                        <span class="transform transition-transform duration-300">&#9662;</span>
+                                    </button>
+                                    <div class="accordion-content px-4 pb-4 text-gray-600">
+                                        <p><strong>Objetivo:</strong> Autenticação forte e sem atrito para pagamentos digitais, aumentando as taxas de aprovação.</p>
+                                        <p class="mt-2"><strong>Como funciona:</strong> Facilita uma troca rica de dados (IP, dispositivo, histórico da conta, etc.) entre comerciante e emissor através do padrão EMV 3-D Secure 2.x, permitindo uma análise de risco em tempo real.</p>
+                                        <p class="mt-2"><strong>Benefício para o comerciante:</strong> Redução do abandono de carrinho, maiores taxas de conversão e aprovação, e melhor experiência do cliente.</p>
+                                    </div>
+                                </div>
+                                <!-- Accordion Item 3 -->
+                                <div class="bg-gray-50 rounded-lg border border-gray-200">
+                                    <button class="accordion-button w-full flex justify-between items-center p-4 text-left font-semibold">
+                                        Decision Intelligence Pro
+                                        <span class="transform transition-transform duration-300">&#9662;</span>
+                                    </button>
+                                    <div class="accordion-content px-4 pb-4 text-gray-600">
+                                        <p><strong>Objetivo:</strong> Prever a probabilidade de fraude em tempo real com altíssima precisão.</p>
+                                        <p class="mt-2"><strong>Como funciona:</strong> Uma solução de IA generativa que analisa mais de um trilhão de pontos de dados em menos de 50ms para pontuar o risco da transação.</p>
+                                        <p class="mt-2"><strong>Benefício para o comerciante:</strong> Aumento médio de 20% na detecção de fraudes e redução de mais de 85% nos falsos positivos, resultando em mais vendas aprovadas e menos perdas.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Visa -->
+                    <div id="visa" class="tab-content">
+                        <div class="p-2 md:p-4">
+                            <h2 class="text-2xl font-bold mb-4 text-center">Defesa Orientada por Dados da Visa</h2>
+                            <p class="text-center text-gray-600 max-w-3xl mx-auto mb-8">As iniciativas da Visa focam em fornecer aos comerciantes ferramentas baseadas em evidências para combater disputas, ao mesmo tempo que oferecem flexibilidade para otimizar a experiência do cliente através do compartilhamento estratégico de dados. Clique em cada programa para ver os detalhes.</p>
+                            <div class="space-y-4">
+                                <!-- Accordion Item 1 -->
+                                <div class="bg-gray-50 rounded-lg border border-gray-200">
+                                    <button class="accordion-button w-full flex justify-between items-center p-4 text-left font-semibold">
+                                        Compelling Evidence 3.0 (CE3.0)
+                                        <span class="transform transition-transform duration-300">&#9662;</span>
+                                    </button>
+                                    <div class="accordion-content px-4 pb-4 text-gray-600">
+                                        <p><strong>Objetivo:</strong> Ajudar comerciantes a combater a fraude amigável (código de disputa 10.4) com provas concretas.</p>
+                                        <p class="mt-2"><strong>Como funciona:</strong> Exige que o comerciante forneça dados de 2 transações anteriores (entre 120 e 365 dias) que não foram contestadas. Pelo menos 2 elementos de dados (ID de Usuário, IP, Endereço de Entrega, ID de Dispositivo) devem corresponder, sendo que um deles DEVE ser o IP ou o ID do Dispositivo.</p>
+                                        <p class="mt-2"><strong>Benefício para o comerciante:</strong> Transferência de responsabilidade para o emissor quando as provas são validadas, prevenindo perdas com chargebacks.</p>
+                                    </div>
+                                </div>
+                                <!-- Accordion Item 2 -->
+                                <div class="bg-gray-50 rounded-lg border border-gray-200">
+                                    <button class="accordion-button w-full flex justify-between items-center p-4 text-left font-semibold">
+                                        Visa Data Only
+                                        <span class="transform transition-transform duration-300">&#9662;</span>
+                                    </button>
+                                    <div class="accordion-content px-4 pb-4 text-gray-600">
+                                        <p><strong>Objetivo:</strong> Aumentar as taxas de aprovação em transações de baixo risco, mantendo uma experiência 100% sem atrito.</p>
+                                        <p class="mt-2"><strong>Como funciona:</strong> O comerciante envia os dados da transação via canal 3DS, mas sem apresentar um desafio de autenticação ao cliente. O emissor usa os dados para uma melhor decisão de risco.</p>
+                                        <p class="mt-2"><strong>Benefício para o comerciante:</strong> Potencial de taxas de aprovação mais altas e conversão otimizada. <strong>Importante:</strong> Não há transferência de responsabilidade neste modo.</p>
+                                    </div>
+                                </div>
+                                <!-- Accordion Item 3 -->
+                                <div class="bg-gray-50 rounded-lg border border-gray-200">
+                                    <button class="accordion-button w-full flex justify-between items-center p-4 text-left font-semibold">
+                                        Visa Transaction Data Enrichment (Merchant Search)
+                                        <span class="transform transition-transform duration-300">&#9662;</span>
+                                    </button>
+                                    <div class="accordion-content px-4 pb-4 text-gray-600">
+                                        <p><strong>Objetivo:</strong> Reduzir chargebacks e consultas causadas por nomes de comerciantes irreconhecíveis nos extratos.</p>
+                                        <p class="mt-2"><strong>Como funciona:</strong> Enriquece os dados da transação com informações claras do comerciante (nome, logo, etc.), ajudando o cliente a reconhecer a compra.</p>
+                                        <p class="mt-2"><strong>Benefício para o comerciante:</strong> Prevenção de "fraude suave" (disputas por falta de clareza), redução de custos com atendimento e melhor experiência do cliente.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Amex -->
+                    <div id="amex" class="tab-content">
+                        <div class="p-2 md:p-4">
+                            <h2 class="text-2xl font-bold mb-4 text-center">Autorização Inteligente da American Express</h2>
+                            <p class="text-center text-gray-600 max-w-3xl mx-auto mb-8">A American Express foca em soluções que priorizam uma experiência de cliente fluida e sem atritos, utilizando dados em tempo real para tomar decisões de autorização inteligentes e precisas em segundo plano. Clique em cada programa para ver os detalhes.</p>
+                            <div class="space-y-4">
+                                <!-- Accordion Item 1 -->
+                                <div class="bg-gray-50 rounded-lg border border-gray-200">
+                                    <button class="accordion-button w-full flex justify-between items-center p-4 text-left font-semibold">
+                                        Enhanced Authorization
+                                        <span class="transform transition-transform duration-300">&#9662;</span>
+                                    </button>
+                                    <div class="accordion-content px-4 pb-4 text-gray-600">
+                                        <p><strong>Objetivo:</strong> Aumentar as taxas de aprovação e reduzir a fraude sem adicionar atrito ao checkout.</p>
+                                        <p class="mt-2"><strong>Como funciona:</strong> O comerciante compartilha dados adicionais (e-mail, IP, telefone, endereço de envio) no momento da autorização. A Amex usa seus modelos de machine learning para comparar esses dados com sua rede e avaliar o risco em tempo real.</p>
+                                        <p class="mt-2"><strong>Benefício para o comerciante:</strong> Maiores taxas de aprovação, redução de falsos positivos e até 60% menos fraude, tudo sem impactar a experiência do cliente.</p>
+                                    </div>
+                                </div>
+                                <!-- Accordion Item 2 -->
+                                <div class="bg-gray-50 rounded-lg border border-gray-200">
+                                    <button class="accordion-button w-full flex justify-between items-center p-4 text-left font-semibold">
+                                        SafeKey (EMV 3-D Secure)
+                                        <span class="transform transition-transform duration-300">&#9662;</span>
+                                    </button>
+                                    <div class="accordion-content px-4 pb-4 text-gray-600">
+                                        <p><strong>Objetivo:</strong> Fornecer uma camada adicional de segurança via padrão EMV 3DS2, com foco em reduzir o atrito.</p>
+                                        <p class="mt-2"><strong>Como funciona:</strong> Utiliza autenticação baseada em risco para minimizar a necessidade de desafios (como senhas de uso único) para a maioria das transações, proporcionando um fluxo "frictionless".</p>
+                                        <p class="mt-2"><strong>Benefício para o comerciante:</strong> Potencial de Transferência de Responsabilidade por Fraude (FLS) para transações autenticadas com sucesso, protegendo a receita do comerciante.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Convergência -->
+                    <div id="convergence" class="tab-content">
+                        <div class="p-2 md:p-4">
+                            <h2 class="text-2xl font-bold mb-4 text-center">Convergência de Dados e o Padrão EMV 3DS2</h2>
+                            <p class="text-center text-gray-600 max-w-3xl mx-auto mb-8">Apesar dos nomes diferentes dos programas, as bandeiras convergem para um conjunto comum de dados valiosos, facilitado pelo padrão global EMV 3-D Secure 2.x. Este gráfico mostra a importância de cada tipo de dado, medido por quantas bandeiras o consideram essencial. Clique nas barras para destacar os dados correspondentes na tabela abaixo.</p>
+                            
+                            <div class="chart-container mb-12">
+                                <canvas id="dataConvergenceChart"></canvas>
+                            </div>
+
+                            <h3 class="text-xl font-bold mb-4 text-center">Tabela Comparativa de Elementos de Dados Chave</h3>
+                            <div class="overflow-x-auto">
+                                <table id="data-table" class="min-w-full bg-white border border-gray-200">
+                                    <thead class="bg-gray-100">
+                                        <tr>
+                                            <th class="py-2 px-4 border-b text-left">Elemento de Dados</th>
+                                            <th class="py-2 px-4 border-b text-center">Mastercard</th>
+                                            <th class="py-2 px-4 border-b text-center">Visa</th>
+                                            <th class="py-2 px-4 border-b text-center">Amex</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr data-category="Geral">
+                                            <td class="py-2 px-4 border-b font-medium">Endereço IP</td>
+                                            <td class="py-2 px-4 border-b text-center text-green-600 font-bold">✓</td>
+                                            <td class="py-2 px-4 border-b text-center text-green-600 font-bold">✓</td>
+                                            <td class="py-2 px-4 border-b text-center text-green-600 font-bold">✓</td>
+                                        </tr>
+                                        <tr data-category="Geral">
+                                            <td class="py-2 px-4 border-b font-medium">ID do Dispositivo / Impressão Digital</td>
+                                            <td class="py-2 px-4 border-b text-center text-green-600 font-bold">✓</td>
+                                            <td class="py-2 px-4 border-b text-center text-green-600 font-bold">✓</td>
+                                            <td class="py-2 px-4 border-b text-center text-green-600 font-bold">✓</td>
+                                        </tr>
+                                        <tr data-category="Identidade do Cliente">
+                                            <td class="py-2 px-4 border-b font-medium">Endereço de E-mail</td>
+                                            <td class="py-2 px-4 border-b text-center text-green-600 font-bold">✓</td>
+                                            <td class="py-2 px-4 border-b text-center text-green-600 font-bold">✓</td>
+                                            <td class="py-2 px-4 border-b text-center text-green-600 font-bold">✓</td>
+                                        </tr>
+                                        <tr data-category="Identidade do Cliente">
+                                            <td class="py-2 px-4 border-b font-medium">Número de Telefone</td>
+                                            <td class="py-2 px-4 border-b text-center text-green-600 font-bold">✓</td>
+                                            <td class="py-2 px-4 border-b text-center text-green-600 font-bold">✓</td>
+                                            <td class="py-2 px-4 border-b text-center text-green-600 font-bold">✓</td>
+                                        </tr>
+                                        <tr data-category="Identidade do Cliente">
+                                            <td class="py-2 px-4 border-b font-medium">Nome Completo</td>
+                                            <td class="py-2 px-4 border-b text-center text-green-600 font-bold">✓</td>
+                                            <td class="py-2 px-4 border-b text-center text-green-600 font-bold">✓</td>
+                                            <td class="py-2 px-4 border-b text-center text-green-600 font-bold">✓</td>
+                                        </tr>
+                                        <tr data-category="Identidade do Cliente">
+                                            <td class="py-2 px-4 border-b font-medium">ID de Usuário (do comerciante)</td>
+                                            <td class="py-2 px-4 border-b text-center text-green-600 font-bold">✓</td>
+                                            <td class="py-2 px-4 border-b text-center text-green-600 font-bold">✓</td>
+                                            <td class="py-2 px-4 border-b text-center text-gray-400">○</td>
+                                        </tr>
+                                        <tr data-category="Endereço do Cliente">
+                                            <td class="py-2 px-4 border-b font-medium">Endereço de Cobrança</td>
+                                            <td class="py-2 px-4 border-b text-center text-green-600 font-bold">✓</td>
+                                            <td class="py-2 px-4 border-b text-center text-green-600 font-bold">✓</td>
+                                            <td class="py-2 px-4 border-b text-center text-green-600 font-bold">✓</td>
+                                        </tr>
+                                        <tr data-category="Endereço do Cliente">
+                                            <td class="py-2 px-4 border-b font-medium">Endereço de Entrega</td>
+                                            <td class="py-2 px-4 border-b text-center text-green-600 font-bold">✓</td>
+                                            <td class="py-2 px-4 border-b text-center text-green-600 font-bold">✓</td>
+                                            <td class="py-2 px-4 border-b text-center text-green-600 font-bold">✓</td>
+                                        </tr>
+                                        <tr data-category="Histórico da Conta">
+                                            <td class="py-2 px-4 border-b font-medium">Histórico da Conta (criação, atividade, etc.)</td>
+                                            <td class="py-2 px-4 border-b text-center text-green-600 font-bold">✓</td>
+                                            <td class="py-2 px-4 border-b text-center text-green-600 font-bold">✓</td>
+                                            <td class="py-2 px-4 border-b text-center text-green-600 font-bold">✓</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recomendações -->
+                    <div id="recommendations" class="tab-content">
+                        <div class="p-2 md:p-4">
+                            <h2 class="text-2xl font-bold mb-4 text-center">Recomendações Estratégicas para Comerciantes</h2>
+                            <p class="text-center text-gray-600 max-w-3xl mx-auto mb-8">Para capitalizar as oportunidades oferecidas pelos dados enriquecidos, os comerciantes devem adotar uma abordagem proativa e focada na qualidade dos dados. As seguintes ações são cruciais para otimizar a performance e a segurança.</p>
+                            <ul class="space-y-4 max-w-2xl mx-auto">
+                                <li class="flex items-start p-4 bg-gray-50 rounded-lg">
+                                    <span class="flex-shrink-0 w-8 h-8 bg-[#6C8EAD] text-white flex items-center justify-center rounded-full font-bold mr-4">1</span>
+                                    <div>
+                                        <h3 class="font-semibold">Priorize a Coleta e a Qualidade dos Dados</h3>
+                                        <p class="text-gray-600">A base de tudo é a coleta de dados abrangentes e precisos (IP, dispositivo, e-mail, etc.). Invista em sistemas que capturem e validem essas informações no checkout.</p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start p-4 bg-gray-50 rounded-lg">
+                                    <span class="flex-shrink-0 w-8 h-8 bg-[#6C8EAD] text-white flex items-center justify-center rounded-full font-bold mr-4">2</span>
+                                    <div>
+                                        <h3 class="font-semibold">Adote o EMV 3-D Secure 2.x como Padrão</h3>
+                                        <p class="text-gray-600">Implemente uma solução 3DS2 robusta. É o protocolo unificador que permite a troca de dados com todas as redes, maximizando as chances de aprovações "frictionless".</p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start p-4 bg-gray-50 rounded-lg">
+                                    <span class="flex-shrink-0 w-8 h-8 bg-[#6C8EAD] text-white flex items-center justify-center rounded-full font-bold mr-4">3</span>
+                                    <div>
+                                        <h3 class="font-semibold">Seja Proativo, Não Apenas Reativo</h3>
+                                        <p class="text-gray-600">Integre o enriquecimento de dados em tempo real no fluxo de autorização para prevenir fraudes antes que aconteçam, em vez de apenas focar na resolução de disputas.</p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start p-4 bg-gray-50 rounded-lg">
+                                    <span class="flex-shrink-0 w-8 h-8 bg-[#6C8EAD] text-white flex items-center justify-center rounded-full font-bold mr-4">4</span>
+                                    <div>
+                                        <h3 class="font-semibold">Otimize seus Descritores de Comerciante</h3>
+                                        <p class="text-gray-600">Trabalhe com seu processador para garantir que o nome da sua loja apareça de forma clara nos extratos de cartão. Isso evita "fraude suave" por falta de reconhecimento.</p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start p-4 bg-gray-50 rounded-lg">
+                                    <span class="flex-shrink-0 w-8 h-8 bg-[#6C8EAD] text-white flex items-center justify-center rounded-full font-bold mr-4">5</span>
+                                    <div>
+                                        <h3 class="font-semibold">Alavanque a Transferência de Responsabilidade</h3>
+                                        <p class="text-gray-600">Entenda os requisitos específicos de cada programa (CE3.0, First Party Trust, SafeKey) para fornecer as provas corretas e proteger sua receita de chargebacks.</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="text-center mt-8 text-sm text-gray-500">
+            <p>Análise interativa gerada para aprofundar o entendimento sobre o uso de dados enriquecidos no e-commerce.</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const tabs = document.querySelectorAll('.tab-button');
+            const tabContents = document.querySelectorAll('.tab-content');
+            const accordions = document.querySelectorAll('.accordion-button');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const targetId = tab.dataset.tab;
+
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+
+                    tabContents.forEach(content => {
+                        content.classList.remove('active');
+                        if (content.id === targetId) {
+                            content.classList.add('active');
+                        }
+                    });
+
+                    if (targetId === 'convergence') {
+                        renderChart();
+                    }
+                });
+            });
+
+            accordions.forEach(accordion => {
+                accordion.addEventListener('click', () => {
+                    accordion.classList.toggle('open');
+                    const icon = accordion.querySelector('span');
+                    icon.style.transform = accordion.classList.contains('open') ? 'rotate(180deg)' : 'rotate(0deg)';
+                });
+            });
+            
+            let chartInstance = null;
+            const chartData = {
+                labels: [
+                    'Endereço IP', 'ID do Dispositivo', 'E-mail', 'Telefone', 'Nome Completo', 'Endereço Cobrança', 'Endereço Entrega', 'Histórico da Conta', 'ID de Usuário'
+                ],
+                datasets: [{
+                    label: 'Nº de Bandeiras que Exigem o Dado',
+                    data: [3, 3, 3, 3, 3, 3, 3, 3, 2],
+                    backgroundColor: '#6C8EAD',
+                    borderColor: '#56708A',
+                    borderWidth: 1
+                }]
+            };
+
+            function renderChart() {
+                const ctx = document.getElementById('dataConvergenceChart').getContext('2d');
+                if (chartInstance) {
+                    chartInstance.destroy();
+                }
+                chartInstance = new Chart(ctx, {
+                    type: 'bar',
+                    data: chartData,
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        indexAxis: 'y',
+                        scales: {
+                            x: {
+                                beginAtZero: true,
+                                max: 3,
+                                ticks: {
+                                    stepSize: 1
+                                }
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        let label = context.dataset.label || '';
+                                        if (label) {
+                                            label += ': ';
+                                        }
+                                        if (context.parsed.x !== null) {
+                                            label += `${context.parsed.x} de 3`;
+                                        }
+                                        return label;
+                                    }
+                                }
+                            }
+                        },
+                        onClick: (event, elements) => {
+                            if (elements.length > 0) {
+                                const chartElement = elements[0];
+                                const index = chartElement.index;
+                                const label = chartData.labels[index];
+                                
+                                const allRows = document.querySelectorAll('#data-table tbody tr');
+                                allRows.forEach(row => row.classList.remove('table-row-highlight'));
+
+                                const targetRow = Array.from(allRows).find(row => row.cells[0].textContent === label);
+                                if (targetRow) {
+                                    targetRow.classList.add('table-row-highlight');
+                                    targetRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
