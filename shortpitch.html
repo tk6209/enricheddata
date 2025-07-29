@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dados Enriquecidos: Convergência nas Bandeiras de Cartão</title>
+    <title data-translate-key="pageTitle">Dados Enriquecidos: Convergência nas Bandeiras de Cartão</title>
     <!-- Carrega o Tailwind CSS para estilização -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -91,7 +91,7 @@
 
         /* Ajustes responsivos para as linhas */
         @media (min-width: 768px) {
-            /* As linhas de conexão serão removidas, então estas regras não serão mais aplicadas */
+            /* As linhas de conexão foram removidas, então estas regras não serão mais aplicadas */
         }
 
         /* Esconde as linhas de conexão em telas menores para simplificar o layout */
@@ -273,23 +273,52 @@
             white-space: pre-wrap; /* Preserva quebras de linha e espaços */
             word-wrap: break-word; /* Quebra palavras longas */
         }
+
+        /* Estilos para os botões de idioma */
+        .language-button {
+            background-color: #e0e7ff; /* Azul claro */
+            color: #4338ca; /* Azul escuro */
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+            border: 2px solid transparent; /* Borda transparente padrão */
+        }
+
+        .language-button:hover {
+            background-color: #c7d2fe; /* Azul um pouco mais escuro no hover */
+        }
+
+        .language-button.active {
+            background-color: #4338ca; /* Azul escuro quando ativo */
+            color: white;
+            border-color: #4338ca; /* Borda da mesma cor para destaque */
+        }
     </style>
 </head>
 <body>
     <div class="container">
+        <!-- Seletor de Idioma (agora com botões) -->
+        <div class="flex justify-end py-4 space-x-2">
+            <button class="language-button active" data-lang="pt">PO</button>
+            <button class="language-button" data-lang="en">EN</button>
+            <button class="language-button" data-lang="es">ES</button>
+        </div>
+
         <!-- Cabeçalho da Página -->
         <header class="text-center py-8">
-            <h1 class="text-4xl md:text-5xl font-extrabold mb-4">
+            <h1 class="text-4xl md:text-5xl font-extrabold mb-4" data-translate-key="mainTitle">
                 Dados Enriquecidos: A Convergência na Proteção de Pagamentos
             </h1>
-            <p class="text-lg md:text-xl text-gray-600">
+            <p class="text-lg md:text-xl text-gray-600" data-translate-key="mainSubtitle">
                 Como Mastercard, Visa e Amex estão unindo forças com a inteligência de dados.
             </p>
         </header>
 
         <!-- Seção de Introdução -->
         <section class="mb-12 text-center max-w-3xl mx-auto">
-            <p class="text-lg text-gray-700 text-justified">
+            <p class="text-lg text-gray-700 text-justified" data-translate-key="introText">
                 No cenário dinâmico dos pagamentos digitais, a prevenção de fraudes e a otimização de transações são cruciais. A chave para isso reside no uso inteligente de **dados enriquecidos** – informações adicionais e contextuais que transformam transações básicas em insights poderosos. As principais bandeiras de cartão de crédito estão liderando essa revolução, integrando esses dados em seus programas para uma segurança e eficiência sem precedentes.
             </p>
         </section>
@@ -298,52 +327,50 @@
         <section class="relative flex flex-col items-center justify-center mb-16">
             <!-- Conceito Central -->
             <div class="central-concept relative">
-                Dados Enriquecidos
-                <p class="text-sm font-normal mt-2">EMV 3-D Secure: Mais de 100 Pontos de Dados Trocados</p>
+                <span data-translate-key="enrichedDataTitle">Dados Enriquecidos</span>
+                <p class="text-sm font-normal mt-2" data-translate-key="emvDataPoints">EMV 3-D Secure: Mais de 100 Pontos de Dados Trocados</p>
             </div>
         </section>
 
         <!-- Nova Seção: Tipos de Dados Enriquecidos (Introdução) -->
         <section class="mb-12 text-center max-w-3xl mx-auto relative mt-20">
-            <h2 class="text-3xl font-bold mb-6">Tipos de Dados Enriquecidos</h2>
-            <p class="text-lg text-gray-700 text-justified mb-8">
+            <h2 class="text-3xl font-bold mb-6" data-translate-key="dataTypesTitle">Tipos de Dados Enriquecidos</h2>
+            <p class="text-lg text-gray-700 text-justified mb-8" data-translate-key="dataTypesIntro">
                 Estes são alguns dos principais dados que, quando combinados, oferecem uma visão holística e poderosa para a prevenção de fraudes e a otimização de transações:
             </p>
             <div class="data-type-list">
-                <span class="data-type-item" data-target-id="details-ip-device">Endereço IP</span>
-                <span class="data-type-item" data-target-id="details-ip-device">Device ID</span>
-                <span class="data-type-item" data-target-id="details-billing-shipping">Endereço de Billing</span>
-                <span class="data-type-item" data-target-id="details-billing-shipping">Endereço de Shipping</span>
-                <span class="data-type-item" data-target-id="details-email-phone">E-mail</span>
-                <span class="data-type-item" data-target-id="details-email-phone">Telefone</span>
-                <span class="data-type-item" data-target-id="details-transaction-behavioral">Histórico de Transações</span>
-                <span class="data-type-item" data-target-id="details-transaction-behavioral">Dados Comportamentais</span>
+                <span class="data-type-item" data-target-id="details-ip-device" data-translate-key="ipDeviceId">Endereço IP</span>
+                <span class="data-type-item" data-target-id="details-ip-device" data-translate-key="deviceId">Device ID</span>
+                <span class="data-type-item" data-target-id="details-billing-shipping" data-translate-key="billingAddress">Endereço de Billing</span>
+                <span class="data-type-item" data-target-id="details-billing-shipping" data-translate-key="shippingAddress">Endereço de Shipping</span>
+                <span class="data-type-item" data-target-id="details-email-phone" data-translate-key="email">E-mail</span>
+                <span class="data-type-item" data-target-id="details-email-phone" data-translate-key="phone">Telefone</span>
+                <span class="data-type-item" data-target-id="details-transaction-behavioral" data-translate-key="transactionHistory">Histórico de Transações</span>
+                <span class="data-type-item" data-target-id="details-transaction-behavioral" data-translate-key="behavioralData">Dados Comportamentais</span>
             </div>
         </section>
 
         <!-- Seção: O Impacto da Convergência (MOVIDA PARA CÁ) -->
         <section class="mb-12 text-center max-w-3xl mx-auto">
-            <h2 class="text-3xl font-bold mb-4">O Impacto da Convergência</h2>
-            <p class="text-lg text-gray-700 text-justified">
+            <h2 class="text-3xl font-bold mb-4" data-translate-key="impactTitle">O Impacto da Convergência</h2>
+            <p class="text-lg text-gray-700 text-justified" data-translate-key="impactText">
                 A convergência no uso de dados enriquecidos por essas gigantes do setor de pagamentos não é apenas uma tendência, mas uma necessidade estratégica. Ao compartilhar e alavancar informações mais detalhadas, elas constroem um ecossistema de pagamentos mais robusto, seguro e eficiente para todos os envolvidos: consumidores, emissores, adquirentes e lojistas. Essa colaboração implícita é um passo fundamental para um futuro com menos fraudes e mais confiança nas transações digitais.
             </p>
         </section>
 
         <!-- Seção de Cards das Bandeiras -->
         <section class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12 relative">
-            <!-- As linhas de conexão foram removidas daqui -->
-
             <!-- Card Mastercard -->
             <div class="brand-card">
                 <!-- Ícone de Segurança (Shield) -->
                 <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
                 </svg>
-                <h3 class="text-2xl font-bold mb-2 text-gray-800">Mastercard</h3>
-                <p class="text-md text-gray-600 mb-4 text-justified">
+                <h3 class="text-2xl font-bold mb-2 text-gray-800" data-translate-key="mastercardTitle">Mastercard</h3>
+                <p class="text-md text-gray-600 mb-4 text-justified" data-translate-key="mastercardDesc">
                     Com foco em **First Party Fraud Protection** e **Identity Check Insights**, a Mastercard aprimora a detecção de fraudes de primeira parte e a verificação de identidade, utilizando dados como IP e Device ID para construir confiança e segurança.
                 </p>
-                <a href="https://developer.mastercard.com/product/first-party-trust/" target="_blank" class="text-blue-500 hover:text-blue-700 font-semibold">Saiba Mais &rarr;</a>
+                <a href="https://developer.mastercard.com/product/first-party-trust/" target="_blank" class="text-blue-500 hover:text-blue-700 font-semibold" data-translate-key="learnMore">Saiba Mais &rarr;</a>
             </div>
 
             <!-- Card Visa -->
@@ -354,11 +381,11 @@
                     <path d="M3 5V19A9 3 0 0 0 21 19V5"></path>
                     <path d="M3 12A9 3 0 0 0 21 12"></path>
                 </svg>
-                <h3 class="text-2xl font-bold mb-2 text-gray-800">Visa</h3>
-                <p class="text-md text-gray-600 mb-4 text-justified">
+                <h3 class="text-2xl font-bold mb-2 text-gray-800" data-translate-key="visaTitle">Visa</h3>
+                <p class="text-md text-gray-600 mb-4 text-justified" data-translate-key="visaDesc">
                     Através do **Compelling Evidence 3.0** e **Visa Data Only**, a Visa fornece um contexto mais rico e robusto para as decisões de fraude, incluindo dados de endereço e histórico de transações, fortalecendo a defesa contra estornos e otimizando aprovações.
                 </p>
-                <a href="https://usa.visa.com/content/dam/VCOM/regional/na/us/support-legal/documents/compelling-evidence-3.0-merchant-readiness-mar2023.pdf" target="_blank" class="text-blue-500 hover:text-blue-700 font-semibold">Saiba Mais &rarr;</a>
+                <a href="https://usa.visa.com/content/dam/VCOM/regional/na/us/support-legal/documents/compelling-evidence-3.0-merchant-readiness-mar2023.pdf" target="_blank" class="text-blue-500 hover:text-blue-700 font-semibold" data-translate-key="learnMore">Saiba Mais &rarr;</a>
             </div>
 
             <!-- Card Amex -->
@@ -368,18 +395,18 @@
                     <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
                     <polyline points="22 4 12 14.01 9 11.01"></polyline>
                 </svg>
-                <h3 class="text-2xl font-bold mb-2 text-gray-800">American Express</h3>
-                <p class="text-md text-gray-600 mb-4 text-justified">
+                <h3 class="text-2xl font-bold mb-2 text-gray-800" data-translate-key="amexTitle">American Express</h3>
+                <p class="text-md text-gray-600 mb-4 text-justified" data-translate-key="amexDesc">
                     Com o **Enhanced Authorization** e o **SafeKey**, a Amex eleva a qualidade dos dados para autorizações mais seguras e uma experiência de cliente aprimorada, focando em autenticação e prevenção com base em dados comportamentais e de contato.
                 </p>
-                <a href="https://www.americanexpress.com/us/merchant/enhanced-authorization.html" target="_blank" class="text-blue-500 hover:text-blue-700 font-semibold">Saiba Mais &rarr;</a>
+                <a href="https://www.americanexpress.com/us/merchant/enhanced-authorization.html" target="_blank" class="text-blue-500 hover:text-blue-700 font-semibold" data-translate-key="learnMore">Saiba Mais &rarr;</a>
             </div>
         </section>
 
         <!-- Seção de Detalhes dos Dados Enriquecidos e Seus Benefícios -->
         <section class="mb-12 max-w-4xl mx-auto">
-            <h2 class="text-3xl font-bold mb-6 text-center">Detalhes dos Dados Enriquecidos e Seus Benefícios</h2>
-            <p class="text-lg text-gray-700 mb-6 text-justified">
+            <h2 class="text-3xl font-bold mb-6 text-center" data-translate-key="dataDetailsTitle">Detalhes dos Dados Enriquecidos e Seus Benefícios</h2>
+            <p class="text-lg text-gray-700 mb-6 text-justified" data-translate-key="dataDetailsIntro">
                 Aprofunde-se nos principais dados enriquecidos que estão transformando a forma como as transações são avaliadas e protegidas:
             </p>
 
@@ -387,32 +414,32 @@
                 <!-- Cada detalhe agora é um elemento <details> expansível -->
                 <div class="data-detail-card">
                     <details id="details-ip-device">
-                        <summary>Endereço IP e Device ID</summary>
-                        <p class="text-gray-600 text-justified pt-2">
+                        <summary data-translate-key="ipDeviceIdSummary">Endereço IP e Device ID</summary>
+                        <p class="text-gray-600 text-justified pt-2" data-translate-key="ipDeviceIdDesc">
                             O **endereço IP** e o **Device ID** (identificação única do dispositivo) são cruciais para mapear a origem da transação e o aparelho utilizado. Discrepâncias entre a localização do IP e o endereço de cobrança, ou o uso de um dispositivo nunca antes visto, podem indicar risco de fraude. Eles ajudam a construir um perfil de risco do dispositivo e da localização.
                         </p>
                     </details>
                 </div>
                 <div class="data-detail-card">
                     <details id="details-billing-shipping">
-                        <summary>Endereço de Billing e Shipping</summary>
-                        <p class="text-gray-600 text-justified pt-2">
+                        <summary data-translate-key="billingShippingSummary">Endereço de Billing e Shipping</summary>
+                        <p class="text-gray-600 text-justified pt-2" data-translate-key="billingShippingDesc">
                             A comparação entre o **endereço de cobrança (billing)** e o **endereço de entrega (shipping)** é um forte indicador. Endereços diferentes, especialmente para compras de alto valor ou para novos clientes, podem ser um sinal de alerta de fraude de entrega.
                         </p>
                     </details>
                 </div>
                 <div class="data-detail-card">
                     <details id="details-email-phone">
-                        <summary>E-mail e Telefone</summary>
-                        <p class="text-gray-600 text-justified pt-2">
+                        <summary data-translate-key="emailPhoneSummary">E-mail e Telefone</summary>
+                        <p class="text-gray-600 text-justified pt-2" data-translate-key="emailPhoneDesc">
                             Informações como **e-mail** e **número de telefone** podem ser usadas para verificar a reputação do comprador. A análise desses dados pode identificar se estão associados a outras atividades fraudulentas, a domínios suspeitos ou a perfis de risco em bancos de dados de fraude.
                         </p>
                     </details>
                 </div>
                 <div class="data-detail-card">
                     <details id="details-transaction-behavioral">
-                        <summary>Histórico de Transações e Comportamental</summary>
-                        <p class="text-gray-600 text-justified pt-2">
+                        <summary data-translate-key="transactionBehavioralSummary">Histórico de Transações e Comportamental</summary>
+                        <p class="text-gray-600 text-justified pt-2" data-translate-key="transactionBehavioralDesc">
                             O **histórico de transações** do cliente (frequência, valor, tipo de compra) e dados **comportamentais** (como velocidade de preenchimento de formulários, padrões de navegação no site, cliques) ajudam a criar um perfil de risco dinâmico. Desvios significativos do comportamento usual podem acionar alertas de fraude em tempo real.
                         </p>
                     </details>
@@ -420,11 +447,11 @@
             </div>
 
             <div class="text-center bg-indigo-100 p-6 rounded-xl shadow-inner mt-8">
-                <h3 class="text-2xl font-bold text-indigo-900 mb-4">Resultados Comprovados:</h3>
-                <p class="text-xl text-indigo-900 mb-4 text-justified">
+                <h3 class="text-2xl font-bold text-indigo-900 mb-4" data-translate-key="resultsTitle">Resultados Comprovados:</h3>
+                <p class="text-xl text-indigo-900 mb-4 text-justified" data-translate-key="resultsIntro">
                     O Imperativo dos Dados Enriquecidos: No e-commerce moderno, o sucesso depende de um delicado equilíbrio: maximizar as aprovações de transações legítimas e, ao mesmo tempo, minimizar as perdas por fraude. Os dados enriquecidos são o ponto de apoio que permite alcançar ambos os objetivos, transformando informações brutas em inteligência para decisões mais seguras e precisas.
                 </p>
-                <p class="text-lg text-indigo-900 text-justified mb-6">
+                <p class="text-lg text-indigo-900 text-justified mb-6" data-translate-key="validationNote">
                     Para garantir a máxima eficácia, é crucial consultar bases de dados para validar a veracidade e o contexto das informações.
                 </p>
 
@@ -433,34 +460,34 @@
                         <p class="kpi-value">
                             Até 10% <span class="kpi-arrow">↑</span>
                         </p>
-                        <p class="kpi-description text-indigo-900">na taxa de autorização</p>
+                        <p class="kpi-description text-indigo-900" data-translate-key="kpiAuthRate">na taxa de autorização</p>
                     </div>
                     <div class="kpi-block">
                         <p class="kpi-value">
                             Até 20% <span class="kpi-arrow">↓</span>
                         </p>
-                        <p class="kpi-description text-indigo-900">na redução de fraude</p>
+                        <p class="kpi-description text-indigo-900" data-translate-key="kpiFraudReduction">na redução de fraude</p>
                     </div>
                     <div class="kpi-block">
                         <p class="kpi-value">
                             >75% <span class="kpi-arrow">↓</span>
                         </p>
-                        <p class="kpi-description text-indigo-900">das reclamações de fraude são "fraude amigável" em alguns mercados, um alvo direto dos novos programas.</p>
+                        <p class="kpi-description text-indigo-900" data-translate-key="kpiFriendlyFraud">das reclamações de fraude são "fraude amigável" em alguns mercados, um alvo direto dos novos programas.</p>
                     </div>
                     <div class="kpi-block">
                         <p class="kpi-value">
                             >85% <span class="kpi-arrow">↓</span>
                         </p>
-                        <p class="kpi-description text-indigo-900">Redução de Falsos Positivos com IA da Mastercard, aumentando aprovações e satisfação do cliente.</p>
+                        <p class="kpi-description text-indigo-900" data-translate-key="kpiFalsePositives">Redução de Falsos Positivos com IA da Mastercard, aumentando aprovações e satisfação do cliente.</p>
                     </div>
                 </div>
-                <p class="text-xl font-extrabold text-indigo-900 mt-4 mb-4">
+                <p class="text-xl font-extrabold text-indigo-900 mt-4 mb-4" data-translate-key="kpiExperience">
                     Melhora na experiência do cliente e redução de falsos positivos
                 </p>
-                <p class="text-lg text-indigo-900 text-justified mt-4">
+                <p class="text-lg text-indigo-900 text-justified mt-4" data-translate-key="doubleImpact">
                     O Duplo Impacto: Segurança e Crescimento. A visão tradicional de que segurança e conversão são opostos está ultrapassada. Uma avaliação de risco mais precisa, alimentada por dados ricos, permite que transações legítimas fluam sem atrito (reduzindo falsos positivos), impulsionando a receita, ao mesmo tempo que bloqueia fraudes reais. Investir em dados enriquecidos é um investimento estratégico no crescimento do negócio.
                 </p>
-                <p class="text-lg text-indigo-900 text-justified mt-4">
+                <p class="text-lg text-indigo-900 text-justified mt-4" data-translate-key="dataFillRate">
                     **Percentual de Preenchimento de Dados no E-commerce:** O percentual de preenchimento desses dados nos e-commerces varia significativamente de acordo com o setor, a plataforma utilizada e as políticas de coleta de cada lojista. Embora não haja um número universal, a tendência é que plataformas e gateways de pagamento busquem maximizar a coleta desses dados para otimizar as decisões de risco. A completude e a qualidade desses dados são um fator crítico para o sucesso dos programas de dados enriquecidos.
                 </p>
             </div>
@@ -468,24 +495,232 @@
 
         <!-- Nova Seção: Análise de Conteúdo com IA -->
         <section class="ai-analysis-section max-w-3xl mx-auto">
-            <h2 class="text-3xl font-bold text-center mb-6">✨ Análise de Conteúdo com IA: Obtenha Insights Rápidos ✨</h2>
-            <p class="text-lg text-gray-700 text-justified mb-4">
+            <h2 class="text-3xl font-bold text-center mb-6" data-translate-key="aiAnalysisTitle">✨ Análise de Conteúdo com IA: Obtenha Insights Rápidos ✨</h2>
+            <p class="text-lg text-gray-700 text-justified mb-4" data-translate-key="aiAnalysisIntro">
                 Cole um texto sobre prevenção de fraudes, dados ou pagamentos abaixo para que nossa IA extraia os principais insights e resumos para você.
             </p>
-            <textarea id="aiInputText" placeholder="Cole seu texto aqui para análise..."></textarea>
-            <button id="aiAnalyzeButton">✨ Gerar Insights ✨</button>
-            <div id="aiLoadingIndicator" class="loading-indicator hidden">Analisando... Por favor, aguarde.</div>
+            <textarea id="aiInputText" placeholder="Cole seu texto aqui para análise..." data-translate-key="aiInputPlaceholder"></textarea>
+            <button id="aiAnalyzeButton" data-translate-key="aiAnalyzeButton">✨ Gerar Insights ✨</button>
+            <div id="aiLoadingIndicator" class="loading-indicator hidden" data-translate-key="aiLoading">Analisando... Por favor, aguarde.</div>
             <div id="aiOutput" class="ai-output hidden"></div>
         </section>
 
         <!-- Rodapé -->
         <footer class="text-center py-6 text-gray-500 text-sm">
-            <p>&copy; 2025 AuthPros. Todos os direitos reservados.</p>
+            <p data-translate-key="copyright">&copy; 2025 AuthPros. Todos os direitos reservados.</p>
         </footer>
     </div>
 
     <script>
+        // Objeto de traduções
+        const translations = {
+            pt: {
+                pageTitle: 'Dados Enriquecidos: Convergência nas Bandeiras de Cartão',
+                selectLanguageLabel: 'Selecione o Idioma',
+                mainTitle: 'Dados Enriquecidos: A Convergência na Proteção de Pagamentos',
+                mainSubtitle: 'Como Mastercard, Visa e Amex estão unindo forças com a inteligência de dados.',
+                introText: 'No cenário dinâmico dos pagamentos digitais, a prevenção de fraudes e a otimização de transações são cruciais. A chave para isso reside no uso inteligente de **dados enriquecidos** – informações adicionais e contextuais que transformam transações básicas em insights poderosos. As principais bandeiras de cartão de crédito estão liderando essa revolução, integrando esses dados em seus programas para uma segurança e eficiência sem precedentes.',
+                enrichedDataTitle: 'Dados Enriquecidos',
+                emvDataPoints: 'EMV 3-D Secure: Mais de 100 Pontos de Dados Trocados',
+                dataTypesTitle: 'Tipos de Dados Enriquecidos',
+                dataTypesIntro: 'Estes são alguns dos principais dados que, quando combinados, oferecem uma visão holística e poderosa para a prevenção de fraudes e a otimização de transações:',
+                ipDeviceId: 'Endereço IP',
+                deviceId: 'Device ID',
+                billingAddress: 'Endereço de Billing',
+                shippingAddress: 'Endereço de Shipping',
+                email: 'E-mail',
+                phone: 'Telefone',
+                transactionHistory: 'Histórico de Transações',
+                behavioralData: 'Dados Comportamentais',
+                impactTitle: 'O Impacto da Convergência',
+                impactText: 'A convergência no uso de dados enriquecidos por essas gigantes do setor de pagamentos não é apenas uma tendência, mas uma necessidade estratégica. Ao compartilhar e alavancar informações mais detalhadas, elas constroem um ecossistema de pagamentos mais robusto, seguro e eficiente para todos os envolvidos: consumidores, emissores, adquirentes e lojistas. Essa colaboração implícita é um passo fundamental para um futuro com menos fraudes e mais confiança nas transações digitais.',
+                mastercardTitle: 'Mastercard',
+                mastercardDesc: 'Com foco em **First Party Fraud Protection** e **Identity Check Insights**, a Mastercard aprimora a detecção de fraudes de primeira parte e a verificação de identidade, utilizando dados como IP e Device ID para construir confiança e segurança.',
+                visaTitle: 'Visa',
+                visaDesc: 'Através do **Compelling Evidence 3.0** e **Visa Data Only**, a Visa fornece um contexto mais rico e robusto para as decisões de fraude, incluindo dados de endereço e histórico de transações, fortalecendo a defesa contra estornos e otimizando aprovações.',
+                amexTitle: 'American Express',
+                amexDesc: 'Com o **Enhanced Authorization** e o **SafeKey**, a Amex eleva a qualidade dos dados para autorizações mais seguras e uma experiência de cliente aprimorada, focando em autenticação e prevenção com base em dados comportamentais e de contato.',
+                learnMore: 'Saiba Mais &rarr;',
+                dataDetailsTitle: 'Detalhes dos Dados Enriquecidos e Seus Benefícios',
+                dataDetailsIntro: 'Aprofunde-se nos principais dados enriquecidos que estão transformando a forma como as transações são avaliadas e protegidas:',
+                ipDeviceIdSummary: 'Endereço IP e Device ID',
+                ipDeviceIdDesc: 'O **endereço IP** e o **Device ID** (identificação única do dispositivo) são cruciais para mapear a origem da transação e o aparelho utilizado. Discrepâncias entre a localização do IP e o endereço de cobrança, ou o uso de um dispositivo nunca antes visto, podem indicar risco de fraude. Eles ajudam a construir um perfil de risco do dispositivo e da localização.',
+                billingShippingSummary: 'Endereço de Billing e Shipping',
+                billingShippingDesc: 'A comparação entre o **endereço de cobrança (billing)** e o **endereço de entrega (shipping)** é um forte indicador. Endereços diferentes, especialmente para compras de alto valor ou para novos clientes, podem ser um sinal de alerta de fraude de entrega.',
+                emailPhoneSummary: 'E-mail e Telefone',
+                emailPhoneDesc: 'Informações como **e-mail** e **número de telefone** podem ser usadas para verificar a reputação do comprador. A análise desses dados pode identificar se estão associados a outras atividades fraudulentas, a domínios suspeitos ou a perfis de risco em bancos de dados de fraude.',
+                transactionBehavioralSummary: 'Histórico de Transações e Comportamental',
+                transactionBehavioralDesc: 'O **histórico de transações** do cliente (frequência, valor, tipo de compra) e dados **comportamentais** (como velocidade de preenchimento de formulários, padrões de navegação no site, cliques) ajudam a criar um perfil de risco dinâmico. Desvios significativos do comportamento usual podem acionar alertas de fraude em tempo real.',
+                resultsTitle: 'Resultados Comprovados:',
+                resultsIntro: 'O Imperativo dos Dados Enriquecidos: No e-commerce moderno, o sucesso depende de um delicado equilíbrio: maximizar as aprovações de transações legítimas e, ao mesmo tempo, minimizar as perdas por fraude. Os dados enriquecidos são o ponto de apoio que permite alcançar ambos os objetivos, transformando informações brutas em inteligência para decisões mais seguras e precisas.',
+                validationNote: 'Para garantir a máxima eficácia, é crucial consultar bases de dados para validar a veracidade e o contexto das informações.',
+                kpiAuthRate: 'na taxa de autorização',
+                kpiFraudReduction: 'na redução de fraude',
+                kpiFriendlyFraud: 'das reclamações de fraude são "fraude amigável" em alguns mercados, um alvo direto dos novos programas.',
+                kpiFalsePositives: 'Redução de Falsos Positivos com IA da Mastercard, aumentando aprovações e satisfação do cliente.',
+                kpiExperience: 'Melhora na experiência do cliente e redução de falsos positivos',
+                doubleImpact: 'O Duplo Impacto: Segurança e Crescimento. A visão tradicional de que segurança e conversão são opostos está ultrapassada. Uma avaliação de risco mais precisa, alimentada por dados ricos, permite que transações legítimas fluam sem atrito (reduzindo falsos positivos), impulsionando a receita, ao mesmo tempo que bloqueia fraudes reais. Investir em dados enriquecidos é um investimento estratégico no crescimento do negócio.',
+                dataFillRate: '**Percentual de Preenchimento de Dados no E-commerce:** O percentual de preenchimento desses dados nos e-commerces varia significativamente de acordo com o setor, a plataforma utilizada e as políticas de coleta de cada lojista. Embora não haja um número universal, a tendência é que plataformas e gateways de pagamento busquem maximizar a coleta desses dados para otimizar as decisões de risco. A completude e a qualidade desses dados são um fator crítico para o sucesso dos programas de dados enriquecidos.',
+                aiAnalysisTitle: '✨ Análise de Conteúdo com IA: Obtenha Insights Rápidos ✨',
+                aiAnalysisIntro: 'Cole um texto sobre prevenção de fraudes, dados ou pagamentos abaixo para que nossa IA extraia os principais insights e resumos para você.',
+                aiInputPlaceholder: 'Cole seu texto aqui para análise...',
+                aiAnalyzeButton: '✨ Gerar Insights ✨',
+                aiLoading: 'Analisando... Por favor, aguarde.',
+                copyright: '&copy; 2025 AuthPros. Todos os direitos reservados.'
+            },
+            en: {
+                pageTitle: 'Enriched Data: Convergence in Card Brands',
+                selectLanguageLabel: 'Select Language',
+                mainTitle: 'Enriched Data: The Convergence in Payment Protection',
+                mainSubtitle: 'How Mastercard, Visa, and Amex are joining forces with data intelligence.',
+                introText: 'In the dynamic landscape of digital payments, fraud prevention and transaction optimization are crucial. The key lies in the intelligent use of **enriched data** – additional and contextual information that transforms basic transactions into powerful insights. Leading card brands are spearheading this revolution, integrating this data into their programs for unprecedented security and efficiency.',
+                enrichedDataTitle: 'Enriched Data',
+                emvDataPoints: 'EMV 3-D Secure: Over 100 Data Points Exchanged',
+                dataTypesTitle: 'Types of Enriched Data',
+                dataTypesIntro: 'These are some of the main data points that, when combined, offer a holistic and powerful view for fraud prevention and transaction optimization:',
+                ipDeviceId: 'IP Address',
+                deviceId: 'Device ID',
+                billingAddress: 'Billing Address',
+                shippingAddress: 'Shipping Address',
+                email: 'Email',
+                phone: 'Phone',
+                transactionHistory: 'Transaction History',
+                behavioralData: 'Behavioral Data',
+                impactTitle: 'The Impact of Convergence',
+                impactText: 'The convergence in the use of enriched data by these payment industry giants is not just a trend, but a strategic necessity. By sharing and leveraging more detailed information, they build a more robust, secure, and efficient payment ecosystem for all involved: consumers, issuers, acquirers, and merchants. This implicit collaboration is a fundamental step towards a future with less fraud and more trust in digital transactions.',
+                mastercardTitle: 'Mastercard',
+                mastercardDesc: 'Focusing on **First Party Fraud Protection** and **Identity Check Insights**, Mastercard enhances first-party fraud detection and identity verification, using data like IP and Device ID to build trust and security.',
+                visaTitle: 'Visa',
+                visaDesc: 'Through **Compelling Evidence 3.0** and **Visa Data Only**, Visa provides richer and more robust context for fraud decisions, including address and transaction history data, strengthening chargeback defense and optimizing approvals.',
+                amexTitle: 'American Express',
+                amexDesc: 'With **Enhanced Authorization** and **SafeKey**, Amex elevates data quality for more secure authorizations and an improved customer experience, focusing on authentication and prevention based on behavioral and contact data.',
+                learnMore: 'Learn More &rarr;',
+                dataDetailsTitle: 'Details of Enriched Data and Their Benefits',
+                dataDetailsIntro: 'Delve into the key enriched data points that are transforming how transactions are evaluated and protected:',
+                ipDeviceIdSummary: 'IP Address and Device ID',
+                ipDeviceIdDesc: 'The **IP address** and **Device ID** (unique device identification) are crucial for mapping the transaction origin and the device used. Discrepancies between the IP location and billing address, or the use of a never-before-seen device, can indicate fraud risk. They help build a risk profile for the device and location.',
+                billingShippingSummary: 'Billing and Shipping Address',
+                billingShippingDesc: 'Comparing the **billing address** and **shipping address** is a strong indicator. Different addresses, especially for high-value purchases or new customers, can be a red flag for delivery fraud.',
+                emailPhoneSummary: 'Email and Phone',
+                emailPhoneDesc: 'Information such as **email** and **phone number** can be used to verify the buyer\'s reputation. Analysis of this data can identify if they are associated with other fraudulent activities, suspicious domains, or risk profiles in fraud databases.',
+                transactionBehavioralSummary: 'Transaction History and Behavioral Data',
+                transactionBehavioralDesc: 'The customer\'s **transaction history** (frequency, value, type of purchase) and **behavioral data** (such as form-filling speed, website navigation patterns, clicks) help create a dynamic risk profile. Significant deviations from usual behavior can trigger real-time fraud alerts.',
+                resultsTitle: 'Proven Results:',
+                resultsIntro: 'The Imperative of Enriched Data: In modern e-commerce, success depends on a delicate balance: maximizing legitimate transaction approvals while minimizing fraud losses. Enriched data is the fulcrum that allows both objectives to be achieved, transforming raw information into intelligence for safer and more precise decisions.',
+                validationNote: 'To ensure maximum effectiveness, it is crucial to consult databases to validate the veracity and context of the information.',
+                kpiAuthRate: 'in authorization rate',
+                kpiFraudReduction: 'in fraud reduction',
+                kpiFriendlyFraud: 'of fraud complaints are "friendly fraud" in some markets, a direct target of new programs.',
+                kpiFalsePositives: 'Reduction in False Positives with Mastercard AI, increasing approvals and customer satisfaction.',
+                kpiExperience: 'Improved customer experience and reduction in false positives',
+                doubleImpact: 'The Dual Impact: Security and Growth. The traditional view that security and conversion are opposites is outdated. More accurate risk assessment, fueled by rich data, allows legitimate transactions to flow seamlessly (reducing false positives), boosting revenue, while blocking real fraud. Investing in enriched data is a strategic investment in business growth.',
+                dataFillRate: '**Percentage of Data Completion in E-commerce:** The percentage of completion of this data in e-commerce varies significantly according to the sector, the platform used, and each merchant\'s collection policies. Although there is no universal number, the trend is for platforms and payment gateways to seek to maximize the collection of this data to optimize risk decisions. The completeness and quality of this data are critical factors for the success of enriched data programs.',
+                aiAnalysisTitle: '✨ AI Content Analysis: Get Quick Insights ✨',
+                aiAnalysisIntro: 'Paste text about fraud prevention, data, or payments below for our AI to extract key insights and summaries for you.',
+                aiInputPlaceholder: 'Paste your text here for analysis...',
+                aiAnalyzeButton: '✨ Generate Insights ✨',
+                aiLoading: 'Analyzing... Please wait.',
+                copyright: '&copy; 2025 AuthPros. All rights reserved.'
+            },
+            es: {
+                pageTitle: 'Datos Enriquecidos: Convergencia en Marcas de Tarjetas',
+                selectLanguageLabel: 'Seleccionar Idioma',
+                mainTitle: 'Datos Enriquecidos: La Convergencia en la Protección de Pagos',
+                mainSubtitle: 'Cómo Mastercard, Visa y Amex están uniendo fuerzas con la inteligencia de datos.',
+                introText: 'En el dinámico panorama de los pagos digitales, la prevención del fraude y la optimización de las transacciones son cruciales. La clave reside en el uso inteligente de **datos enriquecidos** – información adicional y contextual que transforma las transacciones básicas en potentes insights. Las principales marcas de tarjetas están liderando esta revolución, integrando estos datos en sus programas para una seguridad y eficiencia sin precedentes.',
+                enrichedDataTitle: 'Datos Enriquecidos',
+                emvDataPoints: 'EMV 3-D Secure: Más de 100 Puntos de Datos Intercambiados',
+                dataTypesTitle: 'Tipos de Datos Enriquecidos',
+                dataTypesIntro: 'Estos son algunos de los principales datos que, combinados, ofrecen una visión holística y potente para la prevención del fraude y la optimización de las transacciones:',
+                ipDeviceId: 'Dirección IP',
+                deviceId: 'ID del Dispositivo',
+                billingAddress: 'Dirección de Facturación',
+                shippingAddress: 'Dirección de Envío',
+                email: 'Correo Electrónico',
+                phone: 'Teléfono',
+                transactionHistory: 'Historial de Transacciones',
+                behavioralData: 'Datos de Comportamiento',
+                impactTitle: 'El Impacto de la Convergencia',
+                impactText: 'La convergencia en el uso de datos enriquecidos por estos gigantes del sector de pagos no es solo una tendencia, sino una necesidad estratégica. Al compartir y aprovechar información más detallada, construyen un ecosistema de pagos más robusto, seguro y eficiente para todos los involucrados: consumidores, emisores, adquirentes y comercios. Esta colaboración implícita es un paso fundamental hacia un futuro con menos fraude y más confianza en las transacciones digitales.',
+                mastercardTitle: 'Mastercard',
+                mastercardDesc: 'Centrándose en **First Party Fraud Protection** e **Identity Check Insights**, Mastercard mejora la detección de fraude de primera parte y la verificación de identidad, utilizando datos como IP e ID de Dispositivo para generar confianza y seguridad.',
+                visaTitle: 'Visa',
+                visaDesc: 'A través de **Compelling Evidence 3.0** y **Visa Data Only**, Visa proporciona un contexto más rico y robusto para las decisiones de fraude, incluyendo datos de dirección e historial de transacciones, fortaleciendo la defensa contra contracargos y optimizando las aprobaciones.',
+                amexTitle: 'American Express',
+                amexDesc: 'Con **Enhanced Authorization** y **SafeKey**, Amex eleva la calidad de los datos para autorizaciones más seguras y una experiencia de cliente mejorada, centrándose en la autenticación y prevención basada en datos de comportamiento y contacto.',
+                learnMore: 'Saber Más &rarr;',
+                dataDetailsTitle: 'Detalles de los Datos Enriquecidos y Sus Beneficios',
+                dataDetailsIntro: 'Profundice en los puntos de datos enriquecidos clave que están transformando la forma en que se evalúan y protegen las transacciones:',
+                ipDeviceIdSummary: 'Dirección IP e ID del Dispositivo',
+                ipDeviceIdDesc: 'La **dirección IP** y el **ID del Dispositivo** (identificación única del dispositivo) son cruciales para mapear el origen de la transacción y el dispositivo utilizado. Las discrepancias entre la ubicación de la IP y la dirección de facturación, o el uso de un dispositivo nunca antes visto, pueden indicar riesgo de fraude. Ayudan a construir un perfil de riesgo del dispositivo y la ubicación.',
+                billingShippingSummary: 'Dirección de Facturación y Envío',
+                billingShippingDesc: 'La comparación entre la **dirección de facturación (billing)** y la **dirección de envío (shipping)** es un fuerte indicador. Las direcciones diferentes, especialmente para compras de alto valor o para nuevos clientes, pueden ser una señal de alerta de fraude de entrega.',
+                emailPhoneSummary: 'Correo Electrónico y Teléfono',
+                emailPhoneDesc: 'Información como el **correo electrónico** y el **número de teléfono** se puede utilizar para verificar la reputación del comprador. El análisis de estos datos puede identificar si están asociados con otras actividades fraudulentas, dominios sospechosos o perfiles de riesgo en bases de datos de fraude.',
+                transactionBehavioralSummary: 'Historial de Transacciones y Datos de Comportamiento',
+                transactionBehavioralDesc: 'El **historial de transacciones** del cliente (frecuencia, valor, tipo de compra) y los **datos de comportamiento** (como la velocidad de llenado de formularios, los patrones de navegación en el sitio web, los clics) ayudan a crear un perfil de riesgo dinámico. Las desviaciones significativas del comportamiento habitual pueden activar alertas de fraude en tiempo real.',
+                resultsTitle: 'Resultados Comprobados:',
+                resultsIntro: 'El Imperativo de los Datos Enriquecidos: En el comercio electrónico moderno, el éxito depende de un delicado equilibrio: maximizar las aprobaciones de transacciones legítimas y, al mismo tiempo, minimizar las pérdidas por fraude. Los datos enriquecidos son el punto de apoyo que permite alcanzar ambos objetivos, transformando la información bruta en inteligencia para decisiones más seguras y precisas.',
+                validationNote: 'Para garantizar la máxima eficacia, es crucial consultar bases de datos para validar la veracidad y el contexto de la información.',
+                kpiAuthRate: 'en la tasa de autorización',
+                kpiFraudReduction: 'en la reducción de fraude',
+                kpiFriendlyFraud: 'de las quejas de fraude son "fraude amigable" en algunos mercados, un objetivo directo de los nuevos programas.',
+                kpiFalsePositives: 'Reducción de Falsos Positivos con IA de Mastercard, aumentando las aprobaciones y la satisfacción del cliente.',
+                kpiExperience: 'Mejora en la experiencia del cliente y reducción de falsos positivos',
+                doubleImpact: 'El Doble Impacto: Seguridad y Crecimiento. La visión tradicional de que la seguridad y la conversión son opuestas está desactualizada. Una evaluación de riesgo más precisa, alimentada por datos ricos, permite que las transacciones legítimas fluyan sin fricción (reduciendo los falsos positivos), impulsando los ingresos, al mismo tiempo que bloquea el fraude real. Invertir en datos enriquecidos es una inversión estratégica en el crecimiento del negocio.',
+                dataFillRate: '**Porcentaje de Completitud de Datos en el Comercio Electrónico:** El porcentaje de completitud de estos datos en los comercios electrónicos varía significativamente según el sector, la plataforma utilizada y las políticas de recopilación de cada comerciante. Aunque no existe un número universal, la tendencia es que las plataformas y pasarelas de pago busquen maximizar la recopilación de estos datos para optimizar las decisiones de riesgo. La completitud y la calidad de estos datos son factores críticos para el éxito de los programas de datos enriquecidos.',
+                aiAnalysisTitle: '✨ Análisis de Contenido con IA: Obtenga Insights Rápidos ✨',
+                aiAnalysisIntro: 'Pegue un texto sobre prevención de fraude, datos o pagos a continuación para que nuestra IA extraiga los insights clave y resúmenes para usted.',
+                aiInputPlaceholder: 'Pegue su texto aquí para análisis...',
+                aiAnalyzeButton: '✨ Generar Insights ✨',
+                aiLoading: 'Analizando... Por favor, espere.',
+                copyright: '&copy; 2025 AuthPros. Todos los derechos reservados.'
+            }
+        };
+
+        function setLanguage(lang) {
+            document.documentElement.lang = lang; // Define o atributo lang do HTML
+            const elements = document.querySelectorAll('[data-translate-key]');
+            elements.forEach(element => {
+                const key = element.dataset.translateKey;
+                if (translations[lang] && translations[lang][key]) {
+                    // Para o placeholder do textarea, usa setAttribute
+                    if (element.tagName === 'TEXTAREA' && element.hasAttribute('placeholder')) {
+                        element.setAttribute('placeholder', translations[lang][key]);
+                    } else if (element.tagName === 'BUTTON' && element.id === 'aiAnalyzeButton') {
+                        element.innerHTML = translations[lang][key]; // Mantém o ícone
+                    } else {
+                        element.textContent = translations[lang][key];
+                    }
+                }
+            });
+
+            // Atualiza o título da página
+            document.title = translations[lang].pageTitle;
+
+            // Atualiza o estado ativo dos botões de idioma
+            document.querySelectorAll('.language-button').forEach(button => {
+                if (button.dataset.lang === lang) {
+                    button.classList.add('active');
+                } else {
+                    button.classList.remove('active');
+                }
+            });
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
+            // Lógica dos botões de idioma
+            const languageButtons = document.querySelectorAll('.language-button');
+            languageButtons.forEach(button => {
+                button.addEventListener('click', (event) => {
+                    setLanguage(event.target.dataset.lang);
+                });
+            });
+
+            // Define o idioma padrão ao carregar a página (Português)
+            setLanguage('pt');
+
+            // Lógica da IA
             const aiInputText = document.getElementById('aiInputText');
             const aiAnalyzeButton = document.getElementById('aiAnalyzeButton');
             const aiLoadingIndicator = document.getElementById('aiLoadingIndicator');
@@ -495,7 +730,7 @@
                 const promptText = aiInputText.value.trim();
 
                 if (!promptText) {
-                    aiOutput.textContent = 'Por favor, insira um texto para análise.';
+                    aiOutput.textContent = translations[document.documentElement.lang].aiInputPlaceholder; // Usa a tradução para a mensagem de erro
                     aiOutput.classList.remove('hidden');
                     return;
                 }
@@ -530,12 +765,12 @@
                         aiOutput.textContent = text;
                         aiOutput.classList.remove('hidden');
                     } else {
-                        aiOutput.textContent = 'Não foi possível gerar insights. Tente novamente com um texto diferente.';
+                        aiOutput.textContent = translations[document.documentElement.lang].aiOutputError; // Usa a tradução para a mensagem de erro
                         aiOutput.classList.remove('hidden');
                     }
                 } catch (error) {
                     console.error('Erro ao chamar a API Gemini:', error);
-                    aiOutput.textContent = 'Ocorreu um erro ao processar sua solicitação. Por favor, tente novamente mais tarde.';
+                    aiOutput.textContent = translations[document.documentElement.lang].aiOutputErrorGeneric; // Usa a tradução para a mensagem de erro
                     aiOutput.classList.remove('hidden');
                 } finally {
                     aiLoadingIndicator.classList.add('hidden');
