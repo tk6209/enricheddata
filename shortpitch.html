@@ -91,39 +91,7 @@
 
         /* Ajustes responsivos para as linhas */
         @media (min-width: 768px) {
-            /* Linhas do conceito central para os cards das bandeiras */
-            .line-to-mastercard {
-                position: absolute;
-                top: 50%;
-                left: 20%; /* Ajustado para ir em direção ao card */
-                width: 15%;
-                height: 2px;
-                background-color: #a78bfa;
-                transform: translateY(-50%) rotate(-20deg);
-                transform-origin: right center;
-            }
-            .line-to-visa {
-                position: absolute;
-                top: 100%;
-                left: 50%;
-                width: 2px;
-                height: 50px;
-                background-color: #a78bfa;
-                transform: translateX(-50%);
-            }
-            .line-to-amex {
-                position: absolute;
-                top: 50%;
-                right: 20%; /* Ajustado para ir em direção ao card */
-                width: 15%;
-                height: 2px;
-                background-color: #a78bfa;
-                transform: translateY(-50%) rotate(20deg);
-                transform-origin: left center;
-            }
-
-            /* Linha do conceito central para a lista de dados enriquecidos - agora dentro do .central-concept */
-            /* Esta regra CSS não será mais usada pois o estilo é inline na div da linha */
+            /* As linhas de conexão serão removidas, então estas regras não serão mais aplicadas */
         }
 
         /* Esconde as linhas de conexão em telas menores para simplificar o layout */
@@ -155,6 +123,12 @@
             font-weight: 600;
             white-space: nowrap; /* Evita quebras de linha */
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            cursor: pointer; /* Indica que é clicável */
+            transition: background-color 0.2s ease-in-out;
+        }
+
+        .data-type-item:hover {
+            background-color: #c7d2fe; /* Azul um pouco mais escuro no hover */
         }
 
         /* Estilo para a seção de detalhes dos dados */
@@ -320,55 +294,44 @@
             </p>
         </section>
 
-        <!-- Seção do Infográfico - Conceito Central e Conexões -->
+        <!-- Seção do Infográfico - Conceito Central -->
         <section class="relative flex flex-col items-center justify-center mb-16">
             <!-- Conceito Central -->
             <div class="central-concept relative">
                 Dados Enriquecidos
-                <!-- Linha do conceito central para a lista de tipos de dados -->
-                <div class="hidden md:block absolute bottom-0 left-1/2 -translate-x-1/2" style="height: 80px; width: 2px; background-color: #a78bfa;"></div>
-            </div>
-
-            <!-- Linhas de conexão (apenas para desktop) - estas linhas conectam o conceito central aos cards das bandeiras -->
-            <div class="hidden md:block absolute w-full h-full top-0 left-0 pointer-events-none">
-                <!-- Linha para Mastercard (do conceito central) -->
-                <div class="line line-to-mastercard" style="top: 35%; left: 15%; width: 15%; transform: translateY(-50%) rotate(-30deg);"></div>
-                <!-- Linha para Visa (do conceito central) -->
-                <div class="line line-to-visa" style="top: 60%; left: 49.5%; height: 50px;"></div>
-                <!-- Linha para Amex (do conceito central) -->
-                <div class="line line-to-amex" style="top: 35%; right: 15%; width: 15%; transform: translateY(-50%) rotate(30deg);"></div>
+                <p class="text-sm font-normal mt-2">EMV 3-D Secure: Mais de 100 Pontos de Dados Trocados</p>
             </div>
         </section>
 
         <!-- Nova Seção: Tipos de Dados Enriquecidos (Introdução) -->
-        <section class="mb-12 text-center max-w-3xl mx-auto relative mt-20"> <!-- Ajustado para mais espaço -->
+        <section class="mb-12 text-center max-w-3xl mx-auto relative mt-20">
             <h2 class="text-3xl font-bold mb-6">Tipos de Dados Enriquecidos</h2>
             <p class="text-lg text-gray-700 text-justified mb-8">
                 Estes são alguns dos principais dados que, quando combinados, oferecem uma visão holística e poderosa para a prevenção de fraudes e a otimização de transações:
             </p>
             <div class="data-type-list">
-                <span class="data-type-item">Endereço IP</span>
-                <span class="data-type-item">Device ID</span>
-                <span class="data-type-item">Endereço de Billing</span>
-                <span class="data-type-item">Endereço de Shipping</span>
-                <span class="data-type-item">E-mail</span>
-                <span class="data-type-item">Telefone</span>
-                <span class="data-type-item">Histórico de Transações</span>
-                <span class="data-type-item">Dados Comportamentais</span>
+                <span class="data-type-item" data-target-id="details-ip-device">Endereço IP</span>
+                <span class="data-type-item" data-target-id="details-ip-device">Device ID</span>
+                <span class="data-type-item" data-target-id="details-billing-shipping">Endereço de Billing</span>
+                <span class="data-type-item" data-target-id="details-billing-shipping">Endereço de Shipping</span>
+                <span class="data-type-item" data-target-id="details-email-phone">E-mail</span>
+                <span class="data-type-item" data-target-id="details-email-phone">Telefone</span>
+                <span class="data-type-item" data-target-id="details-transaction-behavioral">Histórico de Transações</span>
+                <span class="data-type-item" data-target-id="details-transaction-behavioral">Dados Comportamentais</span>
             </div>
         </section>
 
-        <!-- Seção de Cards das Bandeiras (agora antes dos detalhes dos dados) -->
+        <!-- Seção: O Impacto da Convergência (MOVIDA PARA CÁ) -->
+        <section class="mb-12 text-center max-w-3xl mx-auto">
+            <h2 class="text-3xl font-bold mb-4">O Impacto da Convergência</h2>
+            <p class="text-lg text-gray-700 text-justified">
+                A convergência no uso de dados enriquecidos por essas gigantes do setor de pagamentos não é apenas uma tendência, mas uma necessidade estratégica. Ao compartilhar e alavancar informações mais detalhadas, elas constroem um ecossistema de pagamentos mais robusto, seguro e eficiente para todos os envolvidos: consumidores, emissores, adquirentes e lojistas. Essa colaboração implícita é um passo fundamental para um futuro com menos fraudes e mais confiança nas transações digitais.
+            </p>
+        </section>
+
+        <!-- Seção de Cards das Bandeiras -->
         <section class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12 relative">
-            <!-- Linhas de conexão (apenas para desktop) -->
-            <div class="hidden md:block absolute w-full h-full top-0 left-0 pointer-events-none">
-                <!-- Linha para Mastercard (do conceito central) -->
-                <div class="line line-to-mastercard" style="top: -50px; left: 15%; width: 15%; transform: translateY(-50%) rotate(-30deg);"></div>
-                <!-- Linha para Visa (do conceito central) -->
-                <div class="line line-to-visa" style="top: -50px; left: 49.5%; height: 50px;"></div>
-                <!-- Linha para Amex (do conceito central) -->
-                <div class="line line-to-amex" style="top: -50px; right: 15%; width: 15%; transform: translateY(-50%) rotate(30deg);"></div>
-            </div>
+            <!-- As linhas de conexão foram removidas daqui -->
 
             <!-- Card Mastercard -->
             <div class="brand-card">
@@ -413,7 +376,7 @@
             </div>
         </section>
 
-        <!-- Seção de Detalhes dos Dados Enriquecidos e Seus Benefícios (agora após os cards das bandeiras) -->
+        <!-- Seção de Detalhes dos Dados Enriquecidos e Seus Benefícios -->
         <section class="mb-12 max-w-4xl mx-auto">
             <h2 class="text-3xl font-bold mb-6 text-center">Detalhes dos Dados Enriquecidos e Seus Benefícios</h2>
             <p class="text-lg text-gray-700 mb-6 text-justified">
@@ -423,7 +386,7 @@
             <div class="grid grid-cols-1 gap-6 mb-8">
                 <!-- Cada detalhe agora é um elemento <details> expansível -->
                 <div class="data-detail-card">
-                    <details>
+                    <details id="details-ip-device">
                         <summary>Endereço IP e Device ID</summary>
                         <p class="text-gray-600 text-justified pt-2">
                             O **endereço IP** e o **Device ID** (identificação única do dispositivo) são cruciais para mapear a origem da transação e o aparelho utilizado. Discrepâncias entre a localização do IP e o endereço de cobrança, ou o uso de um dispositivo nunca antes visto, podem indicar risco de fraude. Eles ajudam a construir um perfil de risco do dispositivo e da localização.
@@ -431,7 +394,7 @@
                     </details>
                 </div>
                 <div class="data-detail-card">
-                    <details>
+                    <details id="details-billing-shipping">
                         <summary>Endereço de Billing e Shipping</summary>
                         <p class="text-gray-600 text-justified pt-2">
                             A comparação entre o **endereço de cobrança (billing)** e o **endereço de entrega (shipping)** é um forte indicador. Endereços diferentes, especialmente para compras de alto valor ou para novos clientes, podem ser um sinal de alerta de fraude de entrega.
@@ -439,7 +402,7 @@
                     </details>
                 </div>
                 <div class="data-detail-card">
-                    <details>
+                    <details id="details-email-phone">
                         <summary>E-mail e Telefone</summary>
                         <p class="text-gray-600 text-justified pt-2">
                             Informações como **e-mail** e **número de telefone** podem ser usadas para verificar a reputação do comprador. A análise desses dados pode identificar se estão associados a outras atividades fraudulentas, a domínios suspeitos ou a perfis de risco em bancos de dados de fraude.
@@ -447,7 +410,7 @@
                     </details>
                 </div>
                 <div class="data-detail-card">
-                    <details>
+                    <details id="details-transaction-behavioral">
                         <summary>Histórico de Transações e Comportamental</summary>
                         <p class="text-gray-600 text-justified pt-2">
                             O **histórico de transações** do cliente (frequência, valor, tipo de compra) e dados **comportamentais** (como velocidade de preenchimento de formulários, padrões de navegação no site, cliques) ajudam a criar um perfil de risco dinâmico. Desvios significativos do comportamento usual podem acionar alertas de fraude em tempo real.
@@ -490,12 +453,6 @@
                         </p>
                         <p class="kpi-description text-indigo-900">Redução de Falsos Positivos com IA da Mastercard, aumentando aprovações e satisfação do cliente.</p>
                     </div>
-                    <div class="kpi-block">
-                        <p class="kpi-value">
-                            100+ <span class="kpi-arrow">↔</span>
-                        </p>
-                        <p class="kpi-description text-indigo-900">Pontos de Dados são trocados via EMV 3-D Secure, o padrão unificador do setor.</p>
-                    </div>
                 </div>
                 <p class="text-xl font-extrabold text-indigo-900 mt-4 mb-4">
                     Melhora na experiência do cliente e redução de falsos positivos
@@ -519,14 +476,6 @@
             <button id="aiAnalyzeButton">✨ Gerar Insights ✨</button>
             <div id="aiLoadingIndicator" class="loading-indicator hidden">Analisando... Por favor, aguarde.</div>
             <div id="aiOutput" class="ai-output hidden"></div>
-        </section>
-
-        <!-- Seção de Conclusão -->
-        <section class="mb-8 text-center max-w-3xl mx-auto">
-            <h2 class="text-3xl font-bold mb-4">O Impacto da Convergência</h2>
-            <p class="text-lg text-gray-700 text-justified">
-                A convergência no uso de dados enriquecidos por essas gigantes do setor de pagamentos não é apenas uma tendência, mas uma necessidade estratégica. Ao compartilhar e alavancar informações mais detalhadas, elas constroem um ecossistema de pagamentos mais robusto, seguro e eficiente para todos os envolvidos: consumidores, emissores, adquirentes e lojistas. Essa colaboração implícita é um passo fundamental para um futuro com menos fraudes e mais confiança nas transações digitais.
-            </p>
         </section>
 
         <!-- Rodapé -->
@@ -591,6 +540,33 @@
                 } finally {
                     aiLoadingIndicator.classList.add('hidden');
                 }
+            });
+        });
+
+        // Script para linkar os balões de dados aos detalhes expansíveis
+        document.addEventListener('DOMContentLoaded', () => {
+            const dataTypes = document.querySelectorAll('.data-type-item');
+
+            dataTypes.forEach(item => {
+                item.addEventListener('click', () => {
+                    const targetId = item.dataset.targetId;
+                    if (targetId) {
+                        const targetDetails = document.getElementById(targetId);
+                        if (targetDetails) {
+                            // Fecha todos os outros detalhes abertos, se houver
+                            document.querySelectorAll('.data-detail-card details[open]').forEach(openDetails => {
+                                if (openDetails.id !== targetId) {
+                                    openDetails.open = false;
+                                }
+                            });
+
+                            // Abre o detalhe alvo
+                            targetDetails.open = true;
+                            // Rola a página para o detalhe aberto
+                            targetDetails.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                    }
+                });
             });
         });
     </script>
