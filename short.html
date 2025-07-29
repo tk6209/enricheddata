@@ -9,37 +9,75 @@
     <style>
         /* Define a fonte Inter para todo o corpo do documento */
         body {
-            font-family: "Inter", sans-serif;
-            background-color: #f0f4f8; /* Cor de fundo suave */
-            color: #334155; /* Cor de texto padrão */
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5; /* Cor de fundo suave */
+            color: #333; /* Cor de texto padrão */
             line-height: 1.6;
         }
-
-        /* Estilos para o contêiner principal */
         .container {
-            max-width: 1200px;
+            max-width: 960px; /* Container mais estreito */
             margin: 0 auto;
             padding: 2rem;
         }
-
-        /* Estilo para títulos de seção */
-        h1, h2 {
-            color: #1e293b; /* Cor mais escura para títulos */
+        .header {
+            background-color: #ffffff;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .header img {
+            max-width: 200px;
+            height: auto;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+        }
+        .header h1 {
+            font-size: 2.5rem;
             font-weight: 700;
+            color: #007bff; /* Azul primário */
+            margin-bottom: 0.5rem;
+        }
+        .header p {
+            font-size: 1.1rem;
+            color: #555;
+        }
+        .section-title {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        /* As classes .card, .card h2, .card p, .card a e .grid-container do estilo fornecido não serão aplicadas
+           diretamente aos elementos existentes para evitar conflitos com os estilos específicos já definidos
+           para .brand-card, .data-detail-card e os grids do Tailwind. */
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            color: #777;
+            font-size: 0.9rem;
+            margin-top: 2rem;
         }
 
-        /* Estilo para links */
-        a {
-            color: #3b82f6; /* Azul do Tailwind para links */
-            text-decoration: none;
-            transition: color 0.2s ease-in-out;
+        /* Responsive adjustments for the new styles */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            .header p {
+                font-size: 1rem;
+            }
+            .section-title {
+                font-size: 1.75rem;
+            }
         }
 
-        a:hover {
-            color: #2563eb; /* Azul mais escuro no hover */
-            text-decoration: underline;
-        }
-
+        /* Estilos existentes que foram mantidos e/ou ajustados */
         /* Estilos para os cards das bandeiras */
         .brand-card {
             background-color: #ffffff;
@@ -53,23 +91,21 @@
             text-align: center;
             height: 100%; /* Garante que os cards tenham a mesma altura em um grid */
         }
-
         .brand-card:hover {
             transform: translateY(-5px); /* Efeito de levantar no hover */
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
-
         /* Estilo para ícones SVG */
         .icon-svg {
             width: 3rem;
             height: 3rem;
             margin-bottom: 1rem;
-            color: #6366f1; /* Cor roxa para os ícones */
+            color: #007bff; /* Alterado de roxo para azul primário */
         }
 
         /* Estilo para a caixa central de "Dados Enriquecidos" */
         .central-concept {
-            background-color: #6366f1; /* Roxo vibrante */
+            background-color: #007bff; /* Alterado de roxo para azul primário */
             color: white;
             border-radius: 2rem; /* Cantos bem arredondados */
             padding: 2rem 3rem;
@@ -79,26 +115,7 @@
             text-align: center;
             margin-bottom: 3rem;
             position: relative;
-            z-index: 10; /* Garante que esteja acima das linhas */
-        }
-
-        /* Estilos para as linhas de conexão (simulando um infográfico) */
-        .line {
-            position: absolute;
-            background-color: #94a3b8; /* Cinza suave para as linhas */
-            z-index: 5; /* Abaixo dos cards e do conceito central */
-        }
-
-        /* Ajustes responsivos para as linhas */
-        @media (min-width: 768px) {
-            /* As linhas de conexão foram removidas, então estas regras não serão mais aplicadas */
-        }
-
-        /* Esconde as linhas de conexão em telas menores para simplificar o layout */
-        @media (max-width: 767px) {
-            .line-to-mastercard, .line-to-visa, .line-to-amex, .line-to-data-list {
-                display: none;
-            }
+            z-index: 10;
         }
 
         /* Estilo para justificar o texto */
@@ -114,76 +131,68 @@
             gap: 1rem;
             margin-top: 2rem;
         }
-
         .data-type-item {
-            background-color: #e0e7ff; /* Azul claro */
-            color: #4338ca; /* Azul escuro */
+            background-color: #e0f2ff; /* Azul muito claro */
+            color: #0056b3; /* Azul escuro */
             padding: 0.75rem 1.5rem;
             border-radius: 9999px; /* Pill shape */
             font-weight: 600;
-            white-space: nowrap; /* Evita quebras de linha */
+            white-space: nowrap;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            cursor: pointer; /* Indica que é clicável */
+            cursor: pointer;
             transition: background-color 0.2s ease-in-out;
         }
-
         .data-type-item:hover {
-            background-color: #c7d2fe; /* Azul um pouco mais escuro no hover */
+            background-color: #cceeff; /* Azul um pouco mais escuro no hover */
         }
 
         /* Estilo para a seção de detalhes dos dados */
         .data-detail-card {
             background-color: #ffffff;
             border-radius: 1rem;
-            padding: 0.5rem 1.5rem; /* Ajuste para espaçamento interno */
+            padding: 0.5rem 1.5rem;
             box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
-            margin-bottom: 1rem; /* Espaçamento entre os cards detalhados */
+            margin-bottom: 1rem;
         }
-
         /* Estilo para o summary (cabeçalho expansível) */
         .data-detail-card summary {
-            font-size: 1.25rem; /* text-xl */
-            font-weight: 600; /* font-semibold */
-            color: #1e293b; /* Cor mais escura para títulos */
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #333; /* Cor de texto padrão */
             padding: 1rem 0;
             cursor: pointer;
-            outline: none; /* Remove o contorno de foco padrão */
+            outline: none;
             display: flex;
             align-items: center;
             justify-content: space-between;
         }
-
         .data-detail-card summary::-webkit-details-marker {
-            display: none; /* Esconde o marcador padrão do Chrome */
+            display: none;
         }
-
         .data-detail-card summary::after {
-            content: '▼'; /* Seta para baixo */
+            content: '▼';
             font-size: 1rem;
             transition: transform 0.2s;
         }
-
         .data-detail-card details[open] summary::after {
-            transform: rotate(180deg); /* Gira a seta para cima quando aberto */
+            transform: rotate(180deg);
         }
 
         /* Estilos para os KPIs em blocos separados */
         .kpi-grid {
             display: grid;
-            grid-template-columns: 1fr; /* Uma coluna para mobile */
+            grid-template-columns: 1fr;
             gap: 1.5rem;
             margin-top: 2rem;
             margin-bottom: 2rem;
         }
-
         @media (min-width: 768px) {
             .kpi-grid {
-                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Duas colunas para desktop */
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             }
         }
-
         .kpi-block {
-            background-color: #ffffff; /* Fundo branco para os blocos KPI */
+            background-color: #ffffff;
             border-radius: 1rem;
             padding: 1.5rem;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -193,26 +202,23 @@
             align-items: center;
             justify-content: center;
         }
-
         .kpi-value {
-            font-size: 3rem; /* Tamanho grande para o número */
-            font-weight: 800; /* Extra bold */
-            color: #4338ca; /* Roxo para o valor */
+            font-size: 3rem;
+            font-weight: 800;
+            color: #007bff; /* Alterado de roxo para azul primário */
             display: flex;
             align-items: center;
             gap: 0.5rem;
             margin-bottom: 0.5rem;
         }
-
         .kpi-description {
-            font-size: 1.125rem; /* text-lg */
-            color: #334155; /* Cor de texto padrão */
+            font-size: 1.125rem;
+            color: #333; /* Mantido como cor de texto padrão */
             line-height: 1.4;
         }
-
         .kpi-arrow {
-            font-size: 2rem; /* Tamanho da seta */
-            color: #4338ca; /* Roxo para a seta */
+            font-size: 2rem;
+            color: #007bff; /* Alterado de roxo para azul primário */
         }
 
         /* Estilos para a seção de Análise de Conteúdo com IA */
@@ -224,20 +230,18 @@
             margin-top: 3rem;
             margin-bottom: 3rem;
         }
-
         .ai-analysis-section textarea {
             width: 100%;
             min-height: 150px;
             padding: 1rem;
-            border: 1px solid #cbd5e1; /* slate-300 */
-            border-radius: 0.75rem; /* rounded-xl */
+            border: 1px solid #cbd5e1;
+            border-radius: 0.75rem;
             font-size: 1rem;
             margin-bottom: 1rem;
             resize: vertical;
         }
-
         .ai-analysis-section button {
-            background-color: #6366f1; /* indigo-500 */
+            background-color: #007bff; /* Alterado de roxo para azul primário */
             color: white;
             padding: 0.75rem 2rem;
             border-radius: 0.75rem;
@@ -251,33 +255,30 @@
             width: fit-content;
             margin: 0 auto;
         }
-
         .ai-analysis-section button:hover {
-            background-color: #4f46e5; /* indigo-600 */
+            background-color: #0056b3; /* Alterado de roxo escuro para azul escuro */
         }
-
         .ai-analysis-section .loading-indicator {
             text-align: center;
             margin-top: 1rem;
             font-style: italic;
-            color: #64748b; /* slate-500 */
+            color: #64748b;
         }
-
         .ai-analysis-section .ai-output {
-            background-color: #f8fafc; /* slate-50 */
-            border: 1px dashed #94a3b8; /* slate-400 */
+            background-color: #f8fafc;
+            border: 1px dashed #94a3b8;
             border-radius: 0.75rem;
             padding: 1.5rem;
             margin-top: 2rem;
             text-align: left;
-            white-space: pre-wrap; /* Preserva quebras de linha e espaços */
-            word-wrap: break-word; /* Quebra palavras longas */
+            white-space: pre-wrap;
+            word-wrap: break-word;
         }
 
         /* Estilos para os botões de idioma */
         .language-button {
-            background-color: #e0e7ff; /* Azul claro */
-            color: #4338ca; /* Azul escuro */
+            background-color: #e0f2ff; /* Azul muito claro */
+            color: #0056b3; /* Azul escuro */
             padding: 0.5rem 1rem;
             border-radius: 0.5rem;
             font-weight: 600;
@@ -285,15 +286,13 @@
             transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
             border: 2px solid transparent; /* Borda transparente padrão */
         }
-
         .language-button:hover {
-            background-color: #c7d2fe; /* Azul um pouco mais escuro no hover */
+            background-color: #cceeff; /* Azul um pouco mais escuro no hover */
         }
-
         .language-button.active {
-            background-color: #4338ca; /* Azul escuro quando ativo */
+            background-color: #007bff; /* Azul primário quando ativo */
             color: white;
-            border-color: #4338ca; /* Borda da mesma cor para destaque */
+            border-color: #007bff; /* Borda da mesma cor para destaque */
         }
     </style>
 </head>
@@ -307,11 +306,11 @@
         </div>
 
         <!-- Cabeçalho da Página -->
-        <header class="text-center py-8">
-            <h1 class="text-4xl md:text-5xl font-extrabold mb-4" data-translate-key="mainTitle">
+        <header class="header">
+            <h1 data-translate-key="mainTitle">
                 Dados Enriquecidos: A Convergência na Proteção de Pagamentos
             </h1>
-            <p class="text-lg md:text-xl text-gray-600" data-translate-key="mainSubtitle">
+            <p data-translate-key="mainSubtitle">
                 Como Mastercard, Visa e Amex estão unindo forças com a inteligência de dados.
             </p>
         </header>
@@ -334,7 +333,7 @@
 
         <!-- Nova Seção: Tipos de Dados Enriquecidos (Introdução) -->
         <section class="mb-12 text-center max-w-3xl mx-auto relative mt-20">
-            <h2 class="text-3xl font-bold mb-6" data-translate-key="dataTypesTitle">Tipos de Dados Enriquecidos</h2>
+            <h2 class="section-title" data-translate-key="dataTypesTitle">Tipos de Dados Enriquecidos</h2>
             <p class="text-lg text-gray-700 text-justified mb-8" data-translate-key="dataTypesIntro">
                 Estes são alguns dos principais dados que, quando combinados, oferecem uma visão holística e poderosa para a prevenção de fraudes e a otimização de transações:
             </p>
@@ -352,7 +351,7 @@
 
         <!-- Seção: O Impacto da Convergência (MOVIDA PARA CÁ) -->
         <section class="mb-12 text-center max-w-3xl mx-auto">
-            <h2 class="text-3xl font-bold mb-4" data-translate-key="impactTitle">O Impacto da Convergência</h2>
+            <h2 class="section-title" data-translate-key="impactTitle">O Impacto da Convergência</h2>
             <p class="text-lg text-gray-700 text-justified" data-translate-key="impactText">
                 A convergência no uso de dados enriquecidos por essas gigantes do setor de pagamentos não é apenas uma tendência, mas uma necessidade estratégica. Ao compartilhar e alavancar informações mais detalhadas, elas constroem um ecossistema de pagamentos mais robusto, seguro e eficiente para todos os envolvidos: consumidores, emissores, adquirentes e lojistas. Essa colaboração implícita é um passo fundamental para um futuro com menos fraudes e mais confiança nas transações digitais.
             </p>
@@ -405,7 +404,7 @@
 
         <!-- Seção de Detalhes dos Dados Enriquecidos e Seus Benefícios -->
         <section class="mb-12 max-w-4xl mx-auto">
-            <h2 class="text-3xl font-bold mb-6 text-center" data-translate-key="dataDetailsTitle">Detalhes dos Dados Enriquecidos e Seus Benefícios</h2>
+            <h2 class="section-title" data-translate-key="dataDetailsTitle">Detalhes dos Dados Enriquecidos e Seus Benefícios</h2>
             <p class="text-lg text-gray-700 mb-6 text-justified" data-translate-key="dataDetailsIntro">
                 Aprofunde-se nos principais dados enriquecidos que estão transformando a forma como as transações são avaliadas e protegidas:
             </p>
@@ -446,12 +445,12 @@
                 </div>
             </div>
 
-            <div class="text-center bg-indigo-100 p-6 rounded-xl shadow-inner mt-8">
-                <h3 class="text-2xl font-bold text-indigo-900 mb-4" data-translate-key="resultsTitle">Resultados Comprovados:</h3>
-                <p class="text-xl text-indigo-900 mb-4 text-justified" data-translate-key="resultsIntro">
+            <div class="text-center bg-blue-100 p-6 rounded-xl shadow-inner mt-8">
+                <h3 class="text-2xl font-bold text-blue-900 mb-4" data-translate-key="resultsTitle">Resultados Comprovados:</h3>
+                <p class="text-xl text-blue-900 mb-4 text-justified" data-translate-key="resultsIntro">
                     O Imperativo dos Dados Enriquecidos: No e-commerce moderno, o sucesso depende de um delicado equilíbrio: maximizar as aprovações de transações legítimas e, ao mesmo tempo, minimizar as perdas por fraude. Os dados enriquecidos são o ponto de apoio que permite alcançar ambos os objetivos, transformando informações brutas em inteligência para decisões mais seguras e precisas.
                 </p>
-                <p class="text-lg text-indigo-900 text-justified mb-6" data-translate-key="validationNote">
+                <p class="text-lg text-blue-900 text-justified mb-6" data-translate-key="validationNote">
                     Para garantir a máxima eficácia, é crucial consultar bases de dados para validar a veracidade e o contexto das informações.
                 </p>
 
@@ -460,34 +459,34 @@
                         <p class="kpi-value">
                             Até 10% <span class="kpi-arrow">↑</span>
                         </p>
-                        <p class="kpi-description text-indigo-900" data-translate-key="kpiAuthRate">na taxa de autorização</p>
+                        <p class="kpi-description text-blue-900" data-translate-key="kpiAuthRate">na taxa de autorização</p>
                     </div>
                     <div class="kpi-block">
                         <p class="kpi-value">
                             Até 20% <span class="kpi-arrow">↓</span>
                         </p>
-                        <p class="kpi-description text-indigo-900" data-translate-key="kpiFraudReduction">na redução de fraude</p>
+                        <p class="kpi-description text-blue-900" data-translate-key="kpiFraudReduction">na redução de fraude</p>
                     </div>
                     <div class="kpi-block">
                         <p class="kpi-value">
                             >75% <span class="kpi-arrow">↓</span>
                         </p>
-                        <p class="kpi-description text-indigo-900" data-translate-key="kpiFriendlyFraud">das reclamações de fraude são "fraude amigável" em alguns mercados, um alvo direto dos novos programas.</p>
+                        <p class="kpi-description text-blue-900" data-translate-key="kpiFriendlyFraud">das reclamações de fraude são "fraude amigável" em alguns mercados, um alvo direto dos novos programas.</p>
                     </div>
                     <div class="kpi-block">
                         <p class="kpi-value">
                             >85% <span class="kpi-arrow">↓</span>
                         </p>
-                        <p class="kpi-description text-indigo-900" data-translate-key="kpiFalsePositives">Redução de Falsos Positivos com IA da Mastercard, aumentando aprovações e satisfação do cliente.</p>
+                        <p class="kpi-description text-blue-900" data-translate-key="kpiFalsePositives">Redução de Falsos Positivos com IA da Mastercard, aumentando aprovações e satisfação do cliente.</p>
                     </div>
                 </div>
-                <p class="text-xl font-extrabold text-indigo-900 mt-4 mb-4" data-translate-key="kpiExperience">
+                <p class="text-xl font-extrabold text-blue-900 mt-4 mb-4" data-translate-key="kpiExperience">
                     Melhora na experiência do cliente e redução de falsos positivos
                 </p>
-                <p class="text-lg text-indigo-900 text-justified mt-4" data-translate-key="doubleImpact">
+                <p class="text-lg text-blue-900 text-justified mt-4" data-translate-key="doubleImpact">
                     O Duplo Impacto: Segurança e Crescimento. A visão tradicional de que segurança e conversão são opostos está ultrapassada. Uma avaliação de risco mais precisa, alimentada por dados ricos, permite que transações legítimas fluam sem atrito (reduzindo falsos positivos), impulsionando a receita, ao mesmo tempo que bloqueia fraudes reais. Investir em dados enriquecidos é um investimento estratégico no crescimento do negócio.
                 </p>
-                <p class="text-lg text-indigo-900 text-justified mt-4" data-translate-key="dataFillRate">
+                <p class="text-lg text-blue-900 text-justified mt-4" data-translate-key="dataFillRate">
                     **Percentual de Preenchimento de Dados no E-commerce:** O percentual de preenchimento desses dados nos e-commerces varia significativamente de acordo com o setor, a plataforma utilizada e as políticas de coleta de cada lojista. Embora não haja um número universal, a tendência é que plataformas e gateways de pagamento busquem maximizar a coleta desses dados para otimizar as decisões de risco. A completude e a qualidade desses dados são um fator crítico para o sucesso dos programas de dados enriquecidos.
                 </p>
             </div>
@@ -495,7 +494,7 @@
 
         <!-- Nova Seção: Análise de Conteúdo com IA -->
         <section class="ai-analysis-section max-w-3xl mx-auto">
-            <h2 class="text-3xl font-bold text-center mb-6" data-translate-key="aiAnalysisTitle">✨ Análise de Conteúdo com IA: Obtenha Insights Rápidos ✨</h2>
+            <h2 class="section-title" data-translate-key="aiAnalysisTitle">✨ Análise de Conteúdo com IA: Obtenha Insights Rápidos ✨</h2>
             <p class="text-lg text-gray-700 text-justified mb-4" data-translate-key="aiAnalysisIntro">
                 Cole um texto sobre prevenção de fraudes, dados ou pagamentos abaixo para que nossa IA extraia os principais insights e resumos para você.
             </p>
@@ -506,7 +505,7 @@
         </section>
 
         <!-- Rodapé -->
-        <footer class="text-center py-6 text-gray-500 text-sm">
+        <footer class="footer">
             <p data-translate-key="copyright">&copy; 2025 AuthPros. Todos os direitos reservados.</p>
         </footer>
     </div>
@@ -730,7 +729,8 @@
                 const promptText = aiInputText.value.trim();
 
                 if (!promptText) {
-                    aiOutput.textContent = translations[document.documentElement.lang].aiInputPlaceholder; // Usa a tradução para a mensagem de erro
+                    // Usar a tradução correta para a mensagem de erro de campo vazio
+                    aiOutput.textContent = translations[document.documentElement.lang].aiInputPlaceholder;
                     aiOutput.classList.remove('hidden');
                     return;
                 }
@@ -765,12 +765,14 @@
                         aiOutput.textContent = text;
                         aiOutput.classList.remove('hidden');
                     } else {
-                        aiOutput.textContent = translations[document.documentElement.lang].aiOutputError; // Usa a tradução para a mensagem de erro
+                        // Usar a tradução correta para a mensagem de erro de falha na geração
+                        aiOutput.textContent = translations[document.documentElement.lang].aiOutputError || 'Não foi possível gerar insights. Tente novamente com um texto diferente.';
                         aiOutput.classList.remove('hidden');
                     }
                 } catch (error) {
                     console.error('Erro ao chamar a API Gemini:', error);
-                    aiOutput.textContent = translations[document.documentElement.lang].aiOutputErrorGeneric; // Usa a tradução para a mensagem de erro
+                    // Usar a tradução correta para a mensagem de erro genérico
+                    aiOutput.textContent = translations[document.documentElement.lang].aiOutputErrorGeneric || 'Ocorreu um erro ao processar sua solicitação. Por favor, tente novamente mais tarde.';
                     aiOutput.classList.remove('hidden');
                 } finally {
                     aiLoadingIndicator.classList.add('hidden');
