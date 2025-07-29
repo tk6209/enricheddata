@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dados Enriquecidos: Convergência nas Bandeiras de Cartão</title>
+    <!-- Carrega o Tailwind CSS para estilização -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Define a fonte Inter para todo o corpo do documento */
+        body {
+            font-family: "Inter", sans-serif;
+            background-color: #f0f4f8; /* Cor de fundo suave */
+            color: #334155; /* Cor de texto padrão */
+            line-height: 1.6;
+        }
+
+        /* Estilos para o contêiner principal */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Estilo para títulos de seção */
+        h1, h2 {
+            color: #1e293b; /* Cor mais escura para títulos */
+            font-weight: 700;
+        }
+
+        /* Estilo para links */
+        a {
+            color: #3b82f6; /* Azul do Tailwind para links */
+            text-decoration: none;
+            transition: color 0.2s ease-in-out;
+        }
+
+        a:hover {
+            color: #2563eb; /* Azul mais escuro no hover */
+            text-decoration: underline;
+        }
+
+        /* Estilos para os cards das bandeiras */
+        .brand-card {
+            background-color: #ffffff;
+            border-radius: 1.5rem; /* Cantos mais arredondados */
+            padding: 1.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* Sombra mais suave */
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            height: 100%; /* Garante que os cards tenham a mesma altura em um grid */
+        }
+
+        .brand-card:hover {
+            transform: translateY(-5px); /* Efeito de levantar no hover */
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        /* Estilo para ícones SVG */
+        .icon-svg {
+            width: 3rem;
+            height: 3rem;
+            margin-bottom: 1rem;
+            color: #6366f1; /* Cor roxa para os ícones */
+        }
+
+        /* Estilo para a caixa central de "Dados Enriquecidos" */
+        .central-concept {
+            background-color: #6366f1; /* Roxo vibrante */
+            color: white;
+            border-radius: 2rem; /* Cantos bem arredondados */
+            padding: 2rem 3rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            font-size: 1.75rem; /* Texto maior */
+            font-weight: 800; /* Extra bold */
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+            z-index: 10; /* Garante que esteja acima das linhas */
+        }
+
+        /* Estilos para as linhas de conexão (simulando um infográfico) */
+        .line {
+            position: absolute;
+            background-color: #94a3b8; /* Cinza suave para as linhas */
+            z-index: 5; /* Abaixo dos cards e do conceito central */
+        }
+
+        /* Ajustes responsivos para as linhas */
+        @media (min-width: 768px) {
+            /* Linhas do conceito central para os cards das bandeiras */
+            .line-to-mastercard {
+                position: absolute;
+                top: 50%;
+                left: 20%; /* Ajustado para ir em direção ao card */
+                width: 15%;
+                height: 2px;
+                background-color: #a78bfa;
+                transform: translateY(-50%) rotate(-20deg);
+                transform-origin: right center;
+            }
+            .line-to-visa {
+                position: absolute;
+                top: 100%;
+                left: 50%;
+                width: 2px;
+                height: 50px;
+                background-color: #a78bfa;
+                transform: translateX(-50%);
+            }
+            .line-to-amex {
+                position: absolute;
+                top: 50%;
+                right: 20%; /* Ajustado para ir em direção ao card */
+                width: 15%;
+                height: 2px;
+                background-color: #a78bfa;
+                transform: translateY(-50%) rotate(20deg);
+                transform-origin: left center;
+            }
+
+            /* Linha do conceito central para a lista de dados enriquecidos - agora dentro do .central-concept */
+            /* Esta regra CSS não será mais usada pois o estilo é inline na div da linha */
+        }
+
+        /* Esconde as linhas de conexão em telas menores para simplificar o layout */
+        @media (max-width: 767px) {
+            .line-to-mastercard, .line-to-visa, .line-to-amex, .line-to-data-list {
+                display: none;
+            }
+        }
+
+        /* Estilo para justificar o texto */
+        .text-justified {
+            text-align: justify;
+        }
+
+        /* Estilo para a lista de tipos de dados */
+        .data-type-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .data-type-item {
+            background-color: #e0e7ff; /* Azul claro */
+            color: #4338ca; /* Azul escuro */
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px; /* Pill shape */
+            font-weight: 600;
+            white-space: nowrap; /* Evita quebras de linha */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Estilo para a seção de detalhes dos dados */
+        .data-detail-card {
+            background-color: #ffffff;
+            border-radius: 1rem;
+            padding: 0.5rem 1.5rem; /* Ajuste para espaçamento interno */
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 1rem; /* Espaçamento entre os cards detalhados */
+        }
+
+        /* Estilo para o summary (cabeçalho expansível) */
+        .data-detail-card summary {
+            font-size: 1.25rem; /* text-xl */
+            font-weight: 600; /* font-semibold */
+            color: #1e293b; /* Cor mais escura para títulos */
+            padding: 1rem 0;
+            cursor: pointer;
+            outline: none; /* Remove o contorno de foco padrão */
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .data-detail-card summary::-webkit-details-marker {
+            display: none; /* Esconde o marcador padrão do Chrome */
+        }
+
+        .data-detail-card summary::after {
+            content: '▼'; /* Seta para baixo */
+            font-size: 1rem;
+            transition: transform 0.2s;
+        }
+
+        .data-detail-card details[open] summary::after {
+            transform: rotate(180deg); /* Gira a seta para cima quando aberto */
+        }
+
+        /* Estilos para os KPIs em blocos separados */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: 1fr; /* Uma coluna para mobile */
+            gap: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .kpi-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Duas colunas para desktop */
+            }
+        }
+
+        .kpi-block {
+            background-color: #ffffff; /* Fundo branco para os blocos KPI */
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .kpi-value {
+            font-size: 3rem; /* Tamanho grande para o número */
+            font-weight: 800; /* Extra bold */
+            color: #4338ca; /* Roxo para o valor */
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .kpi-description {
+            font-size: 1.125rem; /* text-lg */
+            color: #334155; /* Cor de texto padrão */
+            line-height: 1.4;
+        }
+
+        .kpi-arrow {
+            font-size: 2rem; /* Tamanho da seta */
+            color: #4338ca; /* Roxo para a seta */
+        }
+
+        /* Estilos para a seção de Análise de Conteúdo com IA */
+        .ai-analysis-section {
+            background-color: #ffffff;
+            border-radius: 1.5rem;
+            padding: 2rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            margin-top: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .ai-analysis-section textarea {
+            width: 100%;
+            min-height: 150px;
+            padding: 1rem;
+            border: 1px solid #cbd5e1; /* slate-300 */
+            border-radius: 0.75rem; /* rounded-xl */
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            resize: vertical;
+        }
+
+        .ai-analysis-section button {
+            background-color: #6366f1; /* indigo-500 */
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            transition: background-color 0.2s ease-in-out;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            justify-content: center;
+            width: fit-content;
+            margin: 0 auto;
+        }
+
+        .ai-analysis-section button:hover {
+            background-color: #4f46e5; /* indigo-600 */
+        }
+
+        .ai-analysis-section .loading-indicator {
+            text-align: center;
+            margin-top: 1rem;
+            font-style: italic;
+            color: #64748b; /* slate-500 */
+        }
+
+        .ai-analysis-section .ai-output {
+            background-color: #f8fafc; /* slate-50 */
+            border: 1px dashed #94a3b8; /* slate-400 */
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            text-align: left;
+            white-space: pre-wrap; /* Preserva quebras de linha e espaços */
+            word-wrap: break-word; /* Quebra palavras longas */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Cabeçalho da Página -->
+        <header class="text-center py-8">
+            <h1 class="text-4xl md:text-5xl font-extrabold mb-4">
+                Dados Enriquecidos: A Convergência na Proteção de Pagamentos
+            </h1>
+            <p class="text-lg md:text-xl text-gray-600">
+                Como Mastercard, Visa e Amex estão unindo forças com a inteligência de dados.
+            </p>
+        </header>
+
+        <!-- Seção de Introdução -->
+        <section class="mb-12 text-center max-w-3xl mx-auto">
+            <p class="text-lg text-gray-700 text-justified">
+                No cenário dinâmico dos pagamentos digitais, a prevenção de fraudes e a otimização de transações são cruciais. A chave para isso reside no uso inteligente de **dados enriquecidos** – informações adicionais e contextuais que transformam transações básicas em insights poderosos. As principais bandeiras de cartão de crédito estão liderando essa revolução, integrando esses dados em seus programas para uma segurança e eficiência sem precedentes.
+            </p>
+        </section>
+
+        <!-- Seção do Infográfico - Conceito Central e Conexões -->
+        <section class="relative flex flex-col items-center justify-center mb-16">
+            <!-- Conceito Central -->
+            <div class="central-concept relative">
+                Dados Enriquecidos
+                <!-- Linha do conceito central para a lista de tipos de dados -->
+                <div class="hidden md:block absolute bottom-0 left-1/2 -translate-x-1/2" style="height: 80px; width: 2px; background-color: #a78bfa;"></div>
+            </div>
+
+            <!-- Linhas de conexão (apenas para desktop) - estas linhas conectam o conceito central aos cards das bandeiras -->
+            <div class="hidden md:block absolute w-full h-full top-0 left-0 pointer-events-none">
+                <!-- Linha para Mastercard (do conceito central) -->
+                <div class="line line-to-mastercard" style="top: 35%; left: 15%; width: 15%; transform: translateY(-50%) rotate(-30deg);"></div>
+                <!-- Linha para Visa (do conceito central) -->
+                <div class="line line-to-visa" style="top: 60%; left: 49.5%; height: 50px;"></div>
+                <!-- Linha para Amex (do conceito central) -->
+                <div class="line line-to-amex" style="top: 35%; right: 15%; width: 15%; transform: translateY(-50%) rotate(30deg);"></div>
+            </div>
+        </section>
+
+        <!-- Nova Seção: Tipos de Dados Enriquecidos (Introdução) -->
+        <section class="mb-12 text-center max-w-3xl mx-auto relative mt-20"> <!-- Ajustado para mais espaço -->
+            <h2 class="text-3xl font-bold mb-6">Tipos de Dados Enriquecidos</h2>
+            <p class="text-lg text-gray-700 text-justified mb-8">
+                Estes são alguns dos principais dados que, quando combinados, oferecem uma visão holística e poderosa para a prevenção de fraudes e a otimização de transações:
+            </p>
+            <div class="data-type-list">
+                <span class="data-type-item">Endereço IP</span>
+                <span class="data-type-item">Device ID</span>
+                <span class="data-type-item">Endereço de Billing</span>
+                <span class="data-type-item">Endereço de Shipping</span>
+                <span class="data-type-item">E-mail</span>
+                <span class="data-type-item">Telefone</span>
+                <span class="data-type-item">Histórico de Transações</span>
+                <span class="data-type-item">Dados Comportamentais</span>
+            </div>
+        </section>
+
+        <!-- Seção de Cards das Bandeiras (agora antes dos detalhes dos dados) -->
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12 relative">
+            <!-- Linhas de conexão (apenas para desktop) -->
+            <div class="hidden md:block absolute w-full h-full top-0 left-0 pointer-events-none">
+                <!-- Linha para Mastercard (do conceito central) -->
+                <div class="line line-to-mastercard" style="top: -50px; left: 15%; width: 15%; transform: translateY(-50%) rotate(-30deg);"></div>
+                <!-- Linha para Visa (do conceito central) -->
+                <div class="line line-to-visa" style="top: -50px; left: 49.5%; height: 50px;"></div>
+                <!-- Linha para Amex (do conceito central) -->
+                <div class="line line-to-amex" style="top: -50px; right: 15%; width: 15%; transform: translateY(-50%) rotate(30deg);"></div>
+            </div>
+
+            <!-- Card Mastercard -->
+            <div class="brand-card">
+                <!-- Ícone de Segurança (Shield) -->
+                <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                </svg>
+                <h3 class="text-2xl font-bold mb-2 text-gray-800">Mastercard</h3>
+                <p class="text-md text-gray-600 mb-4 text-justified">
+                    Com foco em **First Party Fraud Protection** e **Identity Check Insights**, a Mastercard aprimora a detecção de fraudes de primeira parte e a verificação de identidade, utilizando dados como IP e Device ID para construir confiança e segurança.
+                </p>
+                <a href="https://developer.mastercard.com/product/first-party-trust/" target="_blank" class="text-blue-500 hover:text-blue-700 font-semibold">Saiba Mais &rarr;</a>
+            </div>
+
+            <!-- Card Visa -->
+            <div class="brand-card">
+                <!-- Ícone de Dados (Database) -->
+                <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+                    <path d="M3 5V19A9 3 0 0 0 21 19V5"></path>
+                    <path d="M3 12A9 3 0 0 0 21 12"></path>
+                </svg>
+                <h3 class="text-2xl font-bold mb-2 text-gray-800">Visa</h3>
+                <p class="text-md text-gray-600 mb-4 text-justified">
+                    Através do **Compelling Evidence 3.0** e **Visa Data Only**, a Visa fornece um contexto mais rico e robusto para as decisões de fraude, incluindo dados de endereço e histórico de transações, fortalecendo a defesa contra estornos e otimizando aprovações.
+                </p>
+                <a href="https://usa.visa.com/content/dam/VCOM/regional/na/us/support-legal/documents/compelling-evidence-3.0-merchant-readiness-mar2023.pdf" target="_blank" class="text-blue-500 hover:text-blue-700 font-semibold">Saiba Mais &rarr;</a>
+            </div>
+
+            <!-- Card Amex -->
+            <div class="brand-card">
+                <!-- Ícone de Autenticação (Check Circle) -->
+                <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+                <h3 class="text-2xl font-bold mb-2 text-gray-800">American Express</h3>
+                <p class="text-md text-gray-600 mb-4 text-justified">
+                    Com o **Enhanced Authorization** e o **SafeKey**, a Amex eleva a qualidade dos dados para autorizações mais seguras e uma experiência de cliente aprimorada, focando em autenticação e prevenção com base em dados comportamentais e de contato.
+                </p>
+                <a href="https://www.americanexpress.com/us/merchant/enhanced-authorization.html" target="_blank" class="text-blue-500 hover:text-blue-700 font-semibold">Saiba Mais &rarr;</a>
+            </div>
+        </section>
+
+        <!-- Seção de Detalhes dos Dados Enriquecidos e Seus Benefícios (agora após os cards das bandeiras) -->
+        <section class="mb-12 max-w-4xl mx-auto">
+            <h2 class="text-3xl font-bold mb-6 text-center">Detalhes dos Dados Enriquecidos e Seus Benefícios</h2>
+            <p class="text-lg text-gray-700 mb-6 text-justified">
+                Aprofunde-se nos principais dados enriquecidos que estão transformando a forma como as transações são avaliadas e protegidas:
+            </p>
+
+            <div class="grid grid-cols-1 gap-6 mb-8">
+                <!-- Cada detalhe agora é um elemento <details> expansível -->
+                <div class="data-detail-card">
+                    <details>
+                        <summary>Endereço IP e Device ID</summary>
+                        <p class="text-gray-600 text-justified pt-2">
+                            O **endereço IP** e o **Device ID** (identificação única do dispositivo) são cruciais para mapear a origem da transação e o aparelho utilizado. Discrepâncias entre a localização do IP e o endereço de cobrança, ou o uso de um dispositivo nunca antes visto, podem indicar risco de fraude. Eles ajudam a construir um perfil de risco do dispositivo e da localização.
+                        </p>
+                    </details>
+                </div>
+                <div class="data-detail-card">
+                    <details>
+                        <summary>Endereço de Billing e Shipping</summary>
+                        <p class="text-gray-600 text-justified pt-2">
+                            A comparação entre o **endereço de cobrança (billing)** e o **endereço de entrega (shipping)** é um forte indicador. Endereços diferentes, especialmente para compras de alto valor ou para novos clientes, podem ser um sinal de alerta de fraude de entrega.
+                        </p>
+                    </details>
+                </div>
+                <div class="data-detail-card">
+                    <details>
+                        <summary>E-mail e Telefone</summary>
+                        <p class="text-gray-600 text-justified pt-2">
+                            Informações como **e-mail** e **número de telefone** podem ser usadas para verificar a reputação do comprador. A análise desses dados pode identificar se estão associados a outras atividades fraudulentas, a domínios suspeitos ou a perfis de risco em bancos de dados de fraude.
+                        </p>
+                    </details>
+                </div>
+                <div class="data-detail-card">
+                    <details>
+                        <summary>Histórico de Transações e Comportamental</summary>
+                        <p class="text-gray-600 text-justified pt-2">
+                            O **histórico de transações** do cliente (frequência, valor, tipo de compra) e dados **comportamentais** (como velocidade de preenchimento de formulários, padrões de navegação no site, cliques) ajudam a criar um perfil de risco dinâmico. Desvios significativos do comportamento usual podem acionar alertas de fraude em tempo real.
+                        </p>
+                    </details>
+                </div>
+            </div>
+
+            <div class="text-center bg-indigo-100 p-6 rounded-xl shadow-inner mt-8">
+                <h3 class="text-2xl font-bold text-indigo-900 mb-4">Resultados Comprovados:</h3>
+                <p class="text-xl text-indigo-900 mb-4 text-justified">
+                    O Imperativo dos Dados Enriquecidos: No e-commerce moderno, o sucesso depende de um delicado equilíbrio: maximizar as aprovações de transações legítimas e, ao mesmo tempo, minimizar as perdas por fraude. Os dados enriquecidos são o ponto de apoio que permite alcançar ambos os objetivos, transformando informações brutas em inteligência para decisões mais seguras e precisas.
+                </p>
+                <p class="text-lg text-indigo-900 text-justified mb-6">
+                    Para garantir a máxima eficácia, é crucial consultar bases de dados para validar a veracidade e o contexto das informações.
+                </p>
+
+                <div class="kpi-grid">
+                    <div class="kpi-block">
+                        <p class="kpi-value">
+                            Até 10% <span class="kpi-arrow">↑</span>
+                        </p>
+                        <p class="kpi-description text-indigo-900">na taxa de autorização</p>
+                    </div>
+                    <div class="kpi-block">
+                        <p class="kpi-value">
+                            Até 20% <span class="kpi-arrow">↓</span>
+                        </p>
+                        <p class="kpi-description text-indigo-900">na redução de fraude</p>
+                    </div>
+                    <div class="kpi-block">
+                        <p class="kpi-value">
+                            >75% <span class="kpi-arrow">↓</span>
+                        </p>
+                        <p class="kpi-description text-indigo-900">das reclamações de fraude são "fraude amigável" em alguns mercados, um alvo direto dos novos programas.</p>
+                    </div>
+                    <div class="kpi-block">
+                        <p class="kpi-value">
+                            >85% <span class="kpi-arrow">↓</span>
+                        </p>
+                        <p class="kpi-description text-indigo-900">Redução de Falsos Positivos com IA da Mastercard, aumentando aprovações e satisfação do cliente.</p>
+                    </div>
+                    <div class="kpi-block">
+                        <p class="kpi-value">
+                            100+ <span class="kpi-arrow">↔</span>
+                        </p>
+                        <p class="kpi-description text-indigo-900">Pontos de Dados são trocados via EMV 3-D Secure, o padrão unificador do setor.</p>
+                    </div>
+                </div>
+                <p class="text-xl font-extrabold text-indigo-900 mt-4 mb-4">
+                    Melhora na experiência do cliente e redução de falsos positivos
+                </p>
+                <p class="text-lg text-indigo-900 text-justified mt-4">
+                    O Duplo Impacto: Segurança e Crescimento. A visão tradicional de que segurança e conversão são opostos está ultrapassada. Uma avaliação de risco mais precisa, alimentada por dados ricos, permite que transações legítimas fluam sem atrito (reduzindo falsos positivos), impulsionando a receita, ao mesmo tempo que bloqueia fraudes reais. Investir em dados enriquecidos é um investimento estratégico no crescimento do negócio.
+                </p>
+                <p class="text-lg text-indigo-900 text-justified mt-4">
+                    **Percentual de Preenchimento de Dados no E-commerce:** O percentual de preenchimento desses dados nos e-commerces varia significativamente de acordo com o setor, a plataforma utilizada e as políticas de coleta de cada lojista. Embora não haja um número universal, a tendência é que plataformas e gateways de pagamento busquem maximizar a coleta desses dados para otimizar as decisões de risco. A completude e a qualidade desses dados são um fator crítico para o sucesso dos programas de dados enriquecidos.
+                </p>
+            </div>
+        </section>
+
+        <!-- Nova Seção: Análise de Conteúdo com IA -->
+        <section class="ai-analysis-section max-w-3xl mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-6">✨ Análise de Conteúdo com IA: Obtenha Insights Rápidos ✨</h2>
+            <p class="text-lg text-gray-700 text-justified mb-4">
+                Cole um texto sobre prevenção de fraudes, dados ou pagamentos abaixo para que nossa IA extraia os principais insights e resumos para você.
+            </p>
+            <textarea id="aiInputText" placeholder="Cole seu texto aqui para análise..."></textarea>
+            <button id="aiAnalyzeButton">✨ Gerar Insights ✨</button>
+            <div id="aiLoadingIndicator" class="loading-indicator hidden">Analisando... Por favor, aguarde.</div>
+            <div id="aiOutput" class="ai-output hidden"></div>
+        </section>
+
+        <!-- Seção de Conclusão -->
+        <section class="mb-8 text-center max-w-3xl mx-auto">
+            <h2 class="text-3xl font-bold mb-4">O Impacto da Convergência</h2>
+            <p class="text-lg text-gray-700 text-justified">
+                A convergência no uso de dados enriquecidos por essas gigantes do setor de pagamentos não é apenas uma tendência, mas uma necessidade estratégica. Ao compartilhar e alavancar informações mais detalhadas, elas constroem um ecossistema de pagamentos mais robusto, seguro e eficiente para todos os envolvidos: consumidores, emissores, adquirentes e lojistas. Essa colaboração implícita é um passo fundamental para um futuro com menos fraudes e mais confiança nas transações digitais.
+            </p>
+        </section>
+
+        <!-- Rodapé -->
+        <footer class="text-center py-6 text-gray-500 text-sm">
+            <p>&copy; 2025 AuthPros. Todos os direitos reservados.</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const aiInputText = document.getElementById('aiInputText');
+            const aiAnalyzeButton = document.getElementById('aiAnalyzeButton');
+            const aiLoadingIndicator = document.getElementById('aiLoadingIndicator');
+            const aiOutput = document.getElementById('aiOutput');
+
+            aiAnalyzeButton.addEventListener('click', async () => {
+                const promptText = aiInputText.value.trim();
+
+                if (!promptText) {
+                    aiOutput.textContent = 'Por favor, insira um texto para análise.';
+                    aiOutput.classList.remove('hidden');
+                    return;
+                }
+
+                aiLoadingIndicator.classList.remove('hidden');
+                aiOutput.classList.add('hidden');
+                aiOutput.textContent = ''; // Limpa o output anterior
+
+                try {
+                    let chatHistory = [];
+                    chatHistory.push({
+                        role: "user",
+                        parts: [{ text: `Resuma o texto a seguir e extraia os 3 principais insights sobre prevenção de fraudes, dados enriquecidos ou pagamentos. Apresente os insights em formato de lista numerada:\n\n${promptText}` }]
+                    });
+
+                    const payload = { contents: chatHistory };
+                    const apiKey = ""; // A chave da API será fornecida em tempo de execução pelo Canvas
+                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    const result = await response.json();
+
+                    if (result.candidates && result.candidates.length > 0 &&
+                        result.candidates[0].content && result.candidates[0].content.parts &&
+                        result.candidates[0].content.parts.length > 0) {
+                        const text = result.candidates[0].content.parts[0].text;
+                        aiOutput.textContent = text;
+                        aiOutput.classList.remove('hidden');
+                    } else {
+                        aiOutput.textContent = 'Não foi possível gerar insights. Tente novamente com um texto diferente.';
+                        aiOutput.classList.remove('hidden');
+                    }
+                } catch (error) {
+                    console.error('Erro ao chamar a API Gemini:', error);
+                    aiOutput.textContent = 'Ocorreu um erro ao processar sua solicitação. Por favor, tente novamente mais tarde.';
+                    aiOutput.classList.remove('hidden');
+                } finally {
+                    aiLoadingIndicator.classList.add('hidden');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
